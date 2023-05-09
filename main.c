@@ -15,10 +15,11 @@ typedef struct {
 
 void showMenu() {
     printf("===== Menu =====\n");
-    printf("1. Add Student\n");
+    printf("1. Add Student (Authomatically saved in students.txt)\n");
     printf("2. Modify Student Information\n");
-    printf("3. Display students\n");
-    printf("4. Log out\n");
+    printf("3. Display student with specific id\n");
+    printf("4. Load students from file\n");
+    printf("8. Log out\n");
     printf("================\n");
 }
 
@@ -64,6 +65,24 @@ int addStudent(Student *students, int *numStudents) {
 
     students[*numStudents] = student;
     (*numStudents)++;
+
+    // Open the students.txt file in append mode
+    FILE* file = fopen("students.txt", "a");
+    if (file == NULL) {
+        printf("Failed to open the file.\n");
+        return 0;
+    }
+
+    // Write the student information to the file
+    fprintf(file, "%d,%s,%s,%s,%s,%d,%.2f,%s\n",
+            student.id, student.name, student.birthDate, student.school,
+            student.major, student.credits, student.cgpa, student.entrySemester);
+
+    // Close the file
+    fclose(file);
+
+    printf("Student added successfully.\n");
+    return 1;
 
     printf("Student added successfully.\n");
     return 1; 
@@ -135,6 +154,45 @@ void displayStudent(const Student *students, int numStudents, int studentId) {
     printf("Entry Semester: %s\n", student->entrySemester);
 }
 
+void loadStudentsFromFile(Student *students, int *numStudents) {
+    // Open the students.txt file for reading
+    FILE* file = fopen("students.txt", "r");
+    if (file == NULL) {
+        printf("Failed to open the file.\n");
+        return;
+    }
+
+    // Read student information from the file and add them to the students array
+    while (!feof(file)) {
+        Student student;
+        fscanf(file, "%d,%[^,],%[^,],%[^,],%[^,],%d,%f,%[^\n]\n",
+               &student.id, student.name, student.birthDate, student.school,
+               student.major, &student.credits, &student.cgpa, student.entrySemester);
+
+        students[*numStudents] = student;
+        (*numStudents)++;
+    }
+
+    // Close the file
+    fclose(file);
+}
+
+void displayAllStudents(const Student *students, int numStudents) {
+    printf("Students:\n");
+    for (int i = 0; i < numStudents; i++) {
+        const Student *student = &students[i];
+        printf("ID: %d\n", student->id);
+        printf("Name: %s\n", student->name);
+        printf("Birth Date: %s\n", student->birthDate);
+        printf("School: %s\n", student->school);
+        printf("Major: %s\n", student->major);
+        printf("Credits: %d\n", student->credits);
+        printf("CGPA: %.2f\n", student->cgpa);
+        printf("Entry Semester: %s\n", student->entrySemester);
+        printf("----------------\n");
+    }
+}
+
 void performAction(int choice, Student *students, int *numStudents) {
     switch (choice) {
         case 1:
@@ -157,8 +215,13 @@ void performAction(int choice, Student *students, int *numStudents) {
             displayStudent(students, *numStudents, studentId);
             break;
         case 4:
+            printf("Load all students from file (students.txt).\n");
+            loadStudentsFromFile(students, numStudents);
+            displayAllStudents(students, *numStudents);
+            break; 
+        case 8:
             printf("Exiting the program.\n");
-            exit(0); // Exit the program with a status of 0
+            exit(0); 
         default:
             printf("Invalid choice.\n");
     }
