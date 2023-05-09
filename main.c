@@ -1,4 +1,6 @@
 #include "functions.c"
+#include "logic.c" 
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -16,6 +18,12 @@ int main() {
 
     if (success) {
         printf("Welcome, %s!\n", user.username);
+        int choice;
+        showMenu();
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        performAction(choice);
     } else {
         printf("Max attempts reached. Access denied.\n");
     }

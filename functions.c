@@ -40,7 +40,7 @@ int wordCompare(const char *str1, const char *str2) {
 }
 
 
-void cleanUp(char *str) {
+void wordCleanUp(char *str) {
   int length = wordLength(str);
   if (length > 0 && str[length - 1] == '\n') {
     str[length - 1] = '\0';
@@ -81,11 +81,11 @@ int attemptLogin(int maxAttempts, User *user, const char *filename) {
     while (attempts < maxAttempts) {
         printf("Enter your username: ");
         fgets(user->username, MAX_USERNAME_LENGTH, stdin);
-        cleanUp(user->username);
+        wordCleanUp(user->username);
 
         printf("Enter your password: ");
         fgets(user->password, MAX_PASSWORD_LENGTH, stdin);
-        cleanUp(user->password);
+        wordCleanUp(user->password);
 
         if (checkCredentials(user, filename)) {
             return 1;
