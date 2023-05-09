@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void performAction(int choice) {
+void performAction(int choice, const char *filename) {
     switch (choice) {
         case 1:
             printf("Action 1 selected.\n");
