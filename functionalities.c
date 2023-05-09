@@ -12,28 +12,36 @@ void Menu() {
     printf("================================================================\n");
 }
 
-void functionalityChoice(int choice, const char *filename) {
-    switch (choice) {
-        case 1:
-            printf("Add a new student, if student ID already exists, try modifying.\n");
-            while (1) {
-                int added = addStudent(filename);
-                if (added)
-                    break;
-            }
-            break;
-        case 2:
-            printf("Modify Student Information by given ID.\n");
-            modifyStudent(filename);
-            break;
-        case 3:
-            printf("Action 3 selected.\n");
-            // Implement the code for action 3 here
-            break;
-        case 4:
-            printf("Loged out succesfully, please run the program (main.c) to log back in.\n");
-            exit(0); // Exit the program with a status of 0
-        default:
-            printf("Invalid choice.\n");
+void functionalityChoice(const char *filename) {
+    int choice;
+    while (1) {
+        Menu();
+        printf("Please choose an action to perform (you must type number): ");
+        scanf("%d", &choice);
+        getchar(); // Clear the newline character from the input buffer
+
+        switch (choice) {
+            case 1:
+                printf("Add a new student, if student ID already exists, try modifying.\n");
+                while (1) {
+                    int added = addStudent(filename);
+                    if (added)
+                        break;
+                }
+                break;
+            case 2:
+                printf("Modify Student Information by given ID.\n");
+                modifyStudent(filename);
+                break;
+            case 3:
+                printf("Action 3 selected.\n");
+                // Implement the code for action 3 here
+                break;
+            case 4:
+                printf("Logged out successfully. Please run the program (main.c) to log back in.\n");
+                return; // Exit the function and return to the caller
+            default:
+                printf("Sorry, this choice is not recognized! Try another one: \n");
+        }
     }
 }
