@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-
+#include <stdlib.h> 
 typedef struct {
     int id;
     char name[50];
@@ -17,7 +17,7 @@ void showMenu() {
     printf("1. Add Student\n");
     printf("2. Modify Student Information\n");
     printf("3. Perform Action 3\n");
-    printf("4. Exit\n"); 
+    printf("4. Log out\n"); 
     printf("================\n");
 }
 
@@ -43,6 +43,8 @@ int studentExist(int id, const char *filename) {
     return found;
 }
 
+
+//////////////////////////////////////// Add Student ////////////////////////////////////////
 int addStudent(const char *filename) {
     FILE *file = fopen(filename, "a");
     if (file == NULL) {
@@ -155,6 +157,7 @@ int modifyStudent(const char *filename) {
     printf("Student with ID %d modified successfully.\n", studentId);
     return 1; 
 }
+
 
 //////////////////////////////////////////// Action ////////////////////////////////////////////
 void performAction(int choice, const char *filename) {
