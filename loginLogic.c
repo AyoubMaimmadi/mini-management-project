@@ -86,6 +86,8 @@ int checkCredentials(User *user, const char *filename) {
 int attemptLogin(int maxAttempts, User *user, const char *filename) {
     int attempts = 0;
 
+    printf("Welcome to the login page for student management platfrom (SMP).\n");
+
     while (attempts < maxAttempts) {
         printf("Enter your username: ");
         fgets(user->username, MAX_USERNAME_LENGTH, stdin);

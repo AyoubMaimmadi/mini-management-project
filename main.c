@@ -1,5 +1,5 @@
-#include "functions.c"
-#include "logic.c" 
+#include "loginLogic.c"
+#include "functionalities.c" 
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,12 +17,12 @@ int main() {
     success = attemptLogin(MAX_ATTEMPTS, &user, USERS);
 
     if (success) {
-        printf("Welcome, %s!\n", user.name);
+        printf("Welcome, %s!, this is a platform where you can add, modify, select, and delete students from a small text file database\n", user.name);
         int choice;
-        showMenu();
-        printf("Enter your choice: ");
+        Menu();
+        printf("Please choose an action to perform (you must type number): ");
         scanf("%d", &choice);
-        performAction(choice, STUDENTS);
+        functionalityChoice(choice, STUDENTS);
     } else {
         printf("Max attempts reached. Access denied.\n");
     }

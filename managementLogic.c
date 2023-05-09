@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h> 
+
 typedef struct {
     int id;
     char name[50];
@@ -12,14 +13,7 @@ typedef struct {
     char entrySemester[15];
 } Student;
 
-void showMenu() {
-    printf("===== Menu =====\n");
-    printf("1. Add Student\n");
-    printf("2. Modify Student Information\n");
-    printf("3. Perform Action 3\n");
-    printf("4. Log out\n"); 
-    printf("================\n");
-}
+
 
 int studentExist(int id, const char *filename) {
     FILE *file = fopen(filename, "r");
@@ -156,32 +150,4 @@ int modifyStudent(const char *filename) {
     fclose(file);
     printf("Student with ID %d modified successfully.\n", studentId);
     return 1; 
-}
-
-
-//////////////////////////////////////////// Action ////////////////////////////////////////////
-void performAction(int choice, const char *filename) {
-    switch (choice) {
-        case 1:
-            printf("Add a new student, if student ID already exists, try modifying.\n");
-            while (1) {
-                int added = addStudent(filename);
-                if (added)
-                    break;
-            }
-            break;
-        case 2:
-            printf("Modify Student Information by given ID.\n");
-            modifyStudent(filename);
-            break;
-        case 3:
-            printf("Action 3 selected.\n");
-            // Implement the code for action 3 here
-            break;
-        case 4:
-            printf("Exiting the program.\n");
-            exit(0); // Exit the program with a status of 0
-        default:
-            printf("Invalid choice.\n");
-    }
 }
