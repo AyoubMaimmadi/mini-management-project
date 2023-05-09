@@ -1,5 +1,5 @@
 #include "loginLogic.c"
-#include "functionalities.c" 
+#include "menu.c" 
 
 #include <stdio.h>
 #include <stdlib.h>
