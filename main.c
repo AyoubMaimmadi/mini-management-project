@@ -1,4 +1,3 @@
-// #include "functions.h"
 #include "functions.c"
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,7 +11,7 @@ int main() {
     User user;
     int success = 0;
 
-    success = attemptLogin(3, &user, "users.txt");
+    success = attemptLogin(MAX_ATTEMPTS, &user, USERS);
 
     if (success) {
         printf("Welcome, %s!\n", user.username);

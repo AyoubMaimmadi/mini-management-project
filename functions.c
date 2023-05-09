@@ -1,6 +1,6 @@
-// #include "functions.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #define MAX_USERNAME_LENGTH 50
 #define MAX_PASSWORD_LENGTH 50
@@ -21,12 +21,24 @@ size_t wordLength(const char *str) {
 }
 
 int wordCompare(const char *str1, const char *str2) {
-  int i = 0;
-  while (str1[i] != '\0' && str1[i] == str2[i]) {
-    i++;
-  }
-  return str1[i] - str2[i];
+    int i = 0;
+    while (str1[i] != '\0' && str2[i] != '\0') {
+        if (str1[i] != str2[i]) {
+            return str1[i] - str2[i];
+        }
+        i++;
+    }
+
+    // If one string is longer than the other
+    if (str1[i] != '\0') {
+        return 1;
+    } else if (str2[i] != '\0') {
+        return -1;
+    }
+
+    return 0;  // Both strings are equal
 }
+
 
 void cleanUp(char *str) {
   size_t length = wordLength(str);
