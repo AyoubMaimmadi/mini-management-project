@@ -17,7 +17,7 @@ int main() {
     success = attemptLogin(MAX_ATTEMPTS, &user, USERS);
 
     if (success) {
-        printf("Welcome, %s!\n", user.username);
+        printf("Welcome, %s!\n", user.name);
         int choice;
         showMenu();
         printf("Enter your choice: ");

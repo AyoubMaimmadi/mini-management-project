@@ -1,15 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h> 
 
+#define MAX_NAME_LENGTH 50
 #define MAX_USERNAME_LENGTH 50
 #define MAX_PASSWORD_LENGTH 50
 #define MAX_LINE_LENGTH (MAX_USERNAME_LENGTH + MAX_PASSWORD_LENGTH + 2)
 
 typedef struct {
+    char name[MAX_NAME_LENGTH];
     char username[MAX_USERNAME_LENGTH];
     char password[MAX_PASSWORD_LENGTH];
 } User;
+
 
 
 int wordLength(const char *str) {
@@ -47,7 +51,7 @@ void wordCleanUp(char *str) {
   }
 }
 
-int checkCredentials(const User *user, const char *filename) {
+int checkCredentials(User *user, const char *filename) {
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         printf("Failed to open the file.\n");
@@ -58,14 +62,16 @@ int checkCredentials(const User *user, const char *filename) {
     int found = 0;
 
     while (fgets(line, MAX_LINE_LENGTH, file) != NULL) {
+        char stored_name[MAX_NAME_LENGTH];
         char stored_username[MAX_USERNAME_LENGTH];
         char stored_password[MAX_PASSWORD_LENGTH];
 
-        sscanf(line, "%s %s", stored_username, stored_password);
+        sscanf(line, "%[^,], %[^,], %s", stored_name, stored_username, stored_password);
 
         if (wordCompare(user->username, stored_username) == 0 &&
             wordCompare(user->password, stored_password) == 0) {
             found = 1;
+            strncpy(user->name, stored_name, MAX_NAME_LENGTH);  
             break;
         }
     }
@@ -74,6 +80,7 @@ int checkCredentials(const User *user, const char *filename) {
 
     return found;
 }
+
 
 int attemptLogin(int maxAttempts, User *user, const char *filename) {
     int attempts = 0;
@@ -98,3 +105,4 @@ int attemptLogin(int maxAttempts, User *user, const char *filename) {
 
     return 0;
 }
+
