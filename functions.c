@@ -62,16 +62,16 @@ int checkCredentials(User *user, const char *filename) {
     int found = 0;
 
     while (fgets(line, MAX_LINE_LENGTH, file) != NULL) {
-        char stored_name[MAX_NAME_LENGTH];
         char stored_username[MAX_USERNAME_LENGTH];
         char stored_password[MAX_PASSWORD_LENGTH];
+        char stored_name[MAX_NAME_LENGTH];
 
-        sscanf(line, "%[^,], %[^,], %s", stored_name, stored_username, stored_password);
+        sscanf(line, "%s %s %[^\n]", stored_username, stored_password, stored_name);
 
         if (wordCompare(user->username, stored_username) == 0 &&
             wordCompare(user->password, stored_password) == 0) {
             found = 1;
-            strncpy(user->name, stored_name, MAX_NAME_LENGTH);  
+            strncpy(user->name, stored_name, MAX_NAME_LENGTH);
             break;
         }
     }
@@ -80,6 +80,7 @@ int checkCredentials(User *user, const char *filename) {
 
     return found;
 }
+
 
 
 int attemptLogin(int maxAttempts, User *user, const char *filename) {
