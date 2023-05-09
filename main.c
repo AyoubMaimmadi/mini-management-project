@@ -9,17 +9,16 @@
 #define MAX_ATTEMPTS 3
 
 int main() {
-  char username[MAX_USERNAME_LENGTH];
-  char password[MAX_PASSWORD_LENGTH];
-  int success = 0;
+    User user;
+    int success = 0;
 
-  success = attemptLogin(MAX_ATTEMPTS, username, password, USERS);
+    success = attemptLogin(3, &user, "users.txt");
 
-  if (success) {
-    printf("Welcome, %s!\n", username);
-  } else {
-    printf("Max attempts reached. Access denied.\n");
-  }
+    if (success) {
+        printf("Welcome, %s!\n", user.username);
+    } else {
+        printf("Max attempts reached. Access denied.\n");
+    }
 
-  return 0;
+    return 0;
 }
