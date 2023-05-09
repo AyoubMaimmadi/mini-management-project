@@ -5,6 +5,7 @@
 #define MAX_USERNAME_LENGTH 50
 #define MAX_PASSWORD_LENGTH 50
 #define USERS "users.txt"
+#define STUDENTS "students.txt"
 #define MAX_ATTEMPTS 3
 
 int main() {

@@ -12,8 +12,8 @@ typedef struct {
 } User;
 
 
-size_t wordLength(const char *str) {
-  size_t length = 0;
+int wordLength(const char *str) {
+  int length = 0;
   while (str[length] != '\0') {
     length++;
   }
@@ -41,7 +41,7 @@ int wordCompare(const char *str1, const char *str2) {
 
 
 void cleanUp(char *str) {
-  size_t length = wordLength(str);
+  int length = wordLength(str);
   if (length > 0 && str[length - 1] == '\n') {
     str[length - 1] = '\0';
   }
