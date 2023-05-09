@@ -17,7 +17,7 @@ void showMenu() {
     printf("===== Menu =====\n");
     printf("1. Add Student\n");
     printf("2. Modify Student Information\n");
-    printf("3. Perform Action 3\n");
+    printf("3. Display students\n");
     printf("4. Log out\n");
     printf("================\n");
 }
@@ -116,6 +116,25 @@ int modifyStudent(Student *students, int numStudents) {
     return 1;
 }
 
+void displayStudent(const Student *students, int numStudents, int studentId) {
+    int studentIndex = findStudentIndex(studentId, students, numStudents);
+    if (studentIndex == -1) {
+        printf("Student with ID %d does not exist.\n", studentId);
+        return;
+    }
+
+    const Student *student = &students[studentIndex];
+    printf("Student Information:\n");
+    printf("ID: %d\n", student->id);
+    printf("Name: %s\n", student->name);
+    printf("Birth Date: %s\n", student->birthDate);
+    printf("School: %s\n", student->school);
+    printf("Major: %s\n", student->major);
+    printf("Credits: %d\n", student->credits);
+    printf("CGPA: %.2f\n", student->cgpa);
+    printf("Entry Semester: %s\n", student->entrySemester);
+}
+
 void performAction(int choice, Student *students, int *numStudents) {
     switch (choice) {
         case 1:
@@ -127,12 +146,15 @@ void performAction(int choice, Student *students, int *numStudents) {
             }
             break;
         case 2:
-            printf("Modify Student Information by given ID.\n");
+            printf("Modify Student.\n");
             modifyStudent(students, *numStudents);
             break;
         case 3:
-            printf("Action 3 selected.\n");
-            // Implement the code for action 3 here
+            printf("Display student information.\n");
+            int studentId;
+            printf("Enter student ID: ");
+            scanf("%d", &studentId);
+            displayStudent(students, *numStudents, studentId);
             break;
         case 4:
             printf("Exiting the program.\n");
