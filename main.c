@@ -14,13 +14,12 @@ typedef struct {
 } Student;
 
 void showMenu() {
-    printf("===== Menu =====\n");
-    printf("1. Add Student (Authomatically saved in students.txt)\n");
-    printf("2. Modify Student Information\n");
-    printf("3. Display student with specific id\n");
-    printf("4. Load students from file\n");
-    printf("8. Log out\n");
-    printf("================\n");
+    printf("Options, please type a number: \n");
+    printf("1 -> Add Student (Authomatically saved in students.txt)\n");
+    printf("2 -> Modify Student Information\n");
+    printf("3 -> Display student with specific id\n");
+    printf("4 -> Load students from file\n");
+    printf("8 -> Log out\n");
 }
 
 int studentExist(int id, const Student *students, int numStudents) {
