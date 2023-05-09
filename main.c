@@ -22,7 +22,6 @@ int main() {
         showMenu();
         printf("Enter your choice: ");
         scanf("%d", &choice);
-
         performAction(choice, STUDENTS);
     } else {
         printf("Max attempts reached. Access denied.\n");

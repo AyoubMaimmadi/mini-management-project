@@ -1,10 +1,2 @@
-101,John Smith,19950115,SBA,Marketing,120,3.2,Fall 2019
-102,Emily Johnson,19980920,SHSS,Psychology,90,3.7,Spring 2020
-103,Michael Lee,20000610,SSE,Computer,60,3.9,Summer 2020
-104,Sarah Brown,19991203,SBA,Finance,135,3.8,Fall 2020
-105,Jessica Chen,20010805,SHSS,Sociology,75,3.1,Spring 2021
-106,Matthew Wilson,19970718,SSE,Engineering,110,3.5,Fall 2019
-107,Alexander Davis,20020312,SBA,Accounting,100,3.4,Summer 2021
-108,Sophia Johnson,20000828,SHSS,English,80,3.6,Fall 2021
-109,William Thompson,19991231,SSE,Mathematics,130,3.9,Spring 2022
-110,Olivia Martinez,20010823,SBA,Economics,95,3.3,Summer 2022
+1,Ayoub Maimmadi,2020-01-01,SSE,CSC,31,3.00,Fall 2031
+2,Zineb Maimmadi,2004-02-02,SSE,CSC,99,3.44,Fall 2023
