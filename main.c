@@ -204,7 +204,6 @@ void modifyUserPassword(const char *username, const char *newPassword) {
         return;
     }
 
-    // Create a temporary file to store modified data
     FILE* tempFile = fopen("temp_users.txt", "w");
     if (tempFile == NULL) {
         printf("Failed to open the temporary file.\n");
@@ -221,11 +220,9 @@ void modifyUserPassword(const char *username, const char *newPassword) {
         sscanf(line, "%s %s", storedUsername, storedPassword);
 
         if (strcmp(storedUsername, username) == 0) {
-            // Modify the password for the specified username
             fprintf(tempFile, "%s %s\n", username, newPassword);
             modified = 1;
         } else {
-            // Copy the existing line to the temporary file
             fprintf(tempFile, "%s %s\n", storedUsername, storedPassword);
         }
     }
@@ -235,16 +232,16 @@ void modifyUserPassword(const char *username, const char *newPassword) {
 
     if (!modified) {
         printf("Username not found.\n");
-        remove("temp_users.txt");  // Remove the temporary file
+        remove("temp_users.txt");
         return;
     }
 
-    // Replace the original file with the modified temporary file
     remove("users.txt");
     rename("temp_users.txt", "users.txt");
 
     printf("Password modified successfully.\n");
 }
+
 
 
 
