@@ -255,8 +255,8 @@ int main() {
     student1.id = 1;
     strcpy(student1.name, "John Doe");
     strcpy(student1.birthDate, "1998-05-15");
-    strcpy(student1.school, "SBA");
-    strcpy(student1.major, "Finance");
+    strcpy(student1.school, "SSE");
+    strcpy(student1.major, "CSC");
     student1.credits = 90;
     student1.cgpa = 3.75;
     strcpy(student1.entrySemester, "Fall 2019");
@@ -268,7 +268,7 @@ int main() {
     strcpy(student2.name, "Jane Smith");
     strcpy(student2.birthDate, "1999-03-22");
     strcpy(student2.school, "SHSS");
-    strcpy(student2.major, "Psychology");
+    strcpy(student2.major, "CSC");
     student2.credits = 75;
     student2.cgpa = 3.45;
     strcpy(student2.entrySemester, "Spring 2020");
@@ -310,10 +310,18 @@ int main() {
 
     printf("Welcome!\n");
     int choice;
-    showMenu();
-    printf("Type the your choice: ");
-    scanf("%d", &choice);
-    performAction(choice, students, &numStudents);
+    while (1) {
+        showMenu();
+        printf("Type your choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 8) {
+            printf("Logging out...\n");
+            break;  
+        }
+
+        performAction(choice, students, &numStudents);
+    }
 
     return 0;
 }
