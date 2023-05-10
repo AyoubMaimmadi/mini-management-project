@@ -264,7 +264,7 @@ void performAction(int choice, Student *students, int *numStudents) {
         case 3:
             printf("Display student information.\n");
             int studentId;
-            printf("Type the student ID: ");
+            printf("Type the student ID, try IDs 1, or 2: ");
             scanf("%d", &studentId);
             displayStudent(students, *numStudents, studentId);
             break;
