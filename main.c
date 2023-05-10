@@ -170,6 +170,26 @@ void displayAllStudents(const Student *students, int numStudents) {
     }
 }
 
+void saveStudentsToFile(const Student *students, int numStudents) {
+    FILE* file = fopen("students.txt", "w");
+    if (file == NULL) {
+        printf("Failed to open the file.\n");
+        return;
+    }
+
+    for (int i = 0; i < numStudents; i++) {
+        const Student *student = &students[i];
+        fprintf(file, "%d,%s,%s,%s,%s,%d,%.2f,%s\n",
+                student->id, student->name, student->birthDate, student->school,
+                student->major, student->credits, student->cgpa, student->entrySemester);
+    }
+
+    fclose(file);
+
+    printf("Modifications saved successfully to students.txt.\n");
+}
+
+
 void performAction(int choice, Student *students, int *numStudents) {
     switch (choice) {
         case 1:
@@ -195,6 +215,10 @@ void performAction(int choice, Student *students, int *numStudents) {
             loadStudentsFromFile(students, numStudents);
             displayAllStudents(students, *numStudents);
             break;
+        case 5:
+            printf("Save modifications to students.txt.\n");
+            saveStudentsToFile(students, *numStudents);
+            break;
         case 8:
             printf("Exiting the program.\n");
             exit(0);
@@ -202,6 +226,7 @@ void performAction(int choice, Student *students, int *numStudents) {
             printf("Invalid choice.\n");
     }
 }
+
 
 #define MAX_STUDENTS 100
 

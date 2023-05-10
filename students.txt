@@ -1,2 +1,2 @@
-12,ayoub maimmadi,2020-12-22,SSE,CSC,12,3.00,Fall 2012
-77,ayoub maimmadi,20022222,SAA,SAS,24,3.00,fall 8888
+1,John Doe,1998-05-1SBA,SBA,Finance,90,3.75,Fall 2019
+2,Jane Smith,1999-03-2SHSSPsychology,SHSSPsychology,Psychology,75,3.45,Spring 2020
