@@ -14,14 +14,16 @@ typedef struct {
 } Student;
 
 void showMenu() {
-    printf("1 -> Add Student (Authomatically saved in students file)\n");
+    printf("1 -> Add Student\n");
     printf("2 -> Modify Student Information\n");
-    printf("3 -> Display student with specific id\n");
+    printf("3 -> Display student with specific ID\n");
     printf("4 -> Load students from file\n");
     printf("5 -> Save all modifications to students file\n");
+    printf("6 -> Modify User Password\n");
     printf("8 -> Log out\n");
     printf("Options, please type a number: \n");
 }
+
 
 void saveStudentToFile(const Student *student) {
     FILE* file = fopen("students.txt", "a");
@@ -195,6 +197,56 @@ void saveStudentsToFile(const Student *students, int numStudents) {
     printf("Modifications saved successfully to students.txt.\n");
 }
 
+void modifyUserPassword(const char *username, const char *newPassword) {
+    FILE* file = fopen("users.txt", "r");
+    if (file == NULL) {
+        printf("Failed to open the user file.\n");
+        return;
+    }
+
+    // Create a temporary file to store modified data
+    FILE* tempFile = fopen("temp_users.txt", "w");
+    if (tempFile == NULL) {
+        printf("Failed to open the temporary file.\n");
+        fclose(file);
+        return;
+    }
+
+    char line[100];
+    int modified = 0;
+
+    while (fgets(line, sizeof(line), file) != NULL) {
+        char storedUsername[50];
+        char storedPassword[50];
+        sscanf(line, "%s %s", storedUsername, storedPassword);
+
+        if (strcmp(storedUsername, username) == 0) {
+            // Modify the password for the specified username
+            fprintf(tempFile, "%s %s\n", username, newPassword);
+            modified = 1;
+        } else {
+            // Copy the existing line to the temporary file
+            fprintf(tempFile, "%s %s\n", storedUsername, storedPassword);
+        }
+    }
+
+    fclose(file);
+    fclose(tempFile);
+
+    if (!modified) {
+        printf("Username not found.\n");
+        remove("temp_users.txt");  // Remove the temporary file
+        return;
+    }
+
+    // Replace the original file with the modified temporary file
+    remove("users.txt");
+    rename("temp_users.txt", "users.txt");
+
+    printf("Password modified successfully.\n");
+}
+
+
 
 void performAction(int choice, Student *students, int *numStudents) {
     switch (choice) {
@@ -225,18 +277,18 @@ void performAction(int choice, Student *students, int *numStudents) {
             printf("Save modifications to students.txt.\n");
             saveStudentsToFile(students, *numStudents);
             break;
-        case 6:  // Additional case for manual student addition
-            printf("Add Student (Manually save to file).\n");
-            Student student;
-            int added = addStudent(&student, numStudents);
-            if (added) {
-                saveStudentToFile(&student);
-                students[*numStudents] = student;
-                (*numStudents)++;
-            }
+        case 6:
+            printf("Modify User Password.\n");
+            char username[50];
+            char newPassword[50];
+            printf("Type the username to modify password: ");
+            scanf("%s", username);
+            printf("Type the new password: ");
+            scanf("%s", newPassword);
+            modifyUserPassword(username, newPassword);
             break;
         case 8:
-            printf("Exiting the program.\n");
+            printf("Goodbye!\n");
             exit(0);
         default:
             printf("Invalid choice.\n");
