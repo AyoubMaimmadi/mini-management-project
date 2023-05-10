@@ -14,13 +14,31 @@ typedef struct {
 } Student;
 
 void showMenu() {
-    printf("1 -> Add Student (Authomatically saved in students.txt)\n");
+    printf("1 -> Add Student (Authomatically saved in students file)\n");
     printf("2 -> Modify Student Information\n");
     printf("3 -> Display student with specific id\n");
     printf("4 -> Load students from file\n");
+    printf("5 -> Save all modifications to students file\n");
     printf("8 -> Log out\n");
     printf("Options, please type a number: \n");
 }
+
+void saveStudentToFile(const Student *student) {
+    FILE* file = fopen("students.txt", "a");
+    if (file == NULL) {
+        printf("Failed to open the file.\n");
+        return;
+    }
+
+    fprintf(file, "%d,%s,%s,%s,%s,%d,%.2f,%s\n",
+            student->id, student->name, student->birthDate, student->school,
+            student->major, student->credits, student->cgpa, student->entrySemester);
+
+    fclose(file);
+
+    printf("Student saved successfully to students.txt.\n");
+}
+
 
 int addStudent(Student *students, int *numStudents) {
     Student student;
@@ -51,18 +69,6 @@ int addStudent(Student *students, int *numStudents) {
 
     students[*numStudents] = student;
     (*numStudents)++;
-
-    FILE* file = fopen("students.txt", "a");
-    if (file == NULL) {
-        printf("Failed to open the file.\n");
-        return 0;
-    }
-
-    fprintf(file, "%d,%s,%s,%s,%s,%d,%.2f,%s\n",
-            student.id, student.name, student.birthDate, student.school,
-            student.major, student.credits, student.cgpa, student.entrySemester);
-
-    fclose(file);
 
     printf("Student added successfully to the student array.\n");
     return 1;
@@ -130,8 +136,8 @@ void displayStudent(const Student *students, int numStudents, int studentId) {
     printf("School: %s\n", student->school);
     printf("Major: %s\n", student->major);
     printf("Credits: %d\n", student->credits);
-    printf("CGPA: %.2f\n", student->cgpa);
-    printf("Entry Semester: %s\n", student->entrySemester);
+    printf("GPA: %.2f\n", student->cgpa);
+    printf("Starting Semester: %s\n", student->entrySemester);
 }
 
 void loadStudentsFromFile(Student *students, int *numStudents) {
@@ -164,8 +170,8 @@ void displayAllStudents(const Student *students, int numStudents) {
         printf("School: %s\n", student->school);
         printf("Major: %s\n", student->major);
         printf("Credits: %d\n", student->credits);
-        printf("CGPA: %.2f\n", student->cgpa);
-        printf("Entry Semester: %s\n", student->entrySemester);
+        printf("GPA: %.2f\n", student->cgpa);
+        printf("Starting Semester: %s\n", student->entrySemester);
         printf("----------------\n");
     }
 }
@@ -218,6 +224,16 @@ void performAction(int choice, Student *students, int *numStudents) {
         case 5:
             printf("Save modifications to students.txt.\n");
             saveStudentsToFile(students, *numStudents);
+            break;
+        case 6:  // Additional case for manual student addition
+            printf("Add Student (Manually save to file).\n");
+            Student student;
+            int added = addStudent(&student, numStudents);
+            if (added) {
+                saveStudentToFile(&student);
+                students[*numStudents] = student;
+                (*numStudents)++;
+            }
             break;
         case 8:
             printf("Exiting the program.\n");
@@ -288,7 +304,7 @@ int main() {
     fclose(file);
 
     if (!loginSuccess) {
-        printf("Invalid username or password. Exiting...\n");
+        printf("Wrong password or username, plz try again.\n");
         return 1;
     }
 
