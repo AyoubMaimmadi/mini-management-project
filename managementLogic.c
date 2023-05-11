@@ -479,3 +479,52 @@ void displayStudentsSortedByID(const char *filename, int sortOrder) {
                students[i].entrySemester);
     }
 }
+
+
+//////////////////// displayStudentByID //////////////////////////////////////
+void displayStudentByID(const char *filename, int id) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        printf("Error opening file.\n");
+        return;
+    }
+
+    int found = 0;
+    char line[100];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        int currentId = 0;
+        sscanf(line, "%d,", &currentId);
+        if (currentId == id) {
+            found = 1;
+            break;
+        }
+    }
+
+    if (found) {
+        int studentId;
+        char name[50];
+        char birthDate[11];
+        char school[4];
+        char major[50];
+        int credits;
+        float cgpa;
+        char entrySemester[15];
+
+        sscanf(line, "%d,%[^,],%[^,],%[^,],%[^,],%d,%f,%[^\n]",
+               &studentId, name, birthDate, school, major, &credits, &cgpa, entrySemester);
+
+        printf("---- Student Details ----\n");
+        printf("Student ID: %d\n", studentId);
+        printf("Name: %s\n", name);
+        printf("Birth Date: %s\n", birthDate);
+        printf("School: %s\n", school);
+        printf("Major: %s\n", major);
+        printf("Credits: %d\n", credits);
+        printf("CGPA: %.2f\n", cgpa);
+        printf("Entry Semester: %s\n", entrySemester);
+    } else {
+        printf("Student with ID %d does not exist.\n", id);
+    }
+
+    fclose(file);
+}

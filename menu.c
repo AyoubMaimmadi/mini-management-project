@@ -32,7 +32,8 @@ void displayOptions() {
 
 void functionalityChoice(const char *filename) {
     int choice;
-    int sortChoice; // Move the declaration here
+    int sortChoice; 
+    int studentID;
 
     while (1) {
         Menu();
@@ -84,7 +85,9 @@ void functionalityChoice(const char *filename) {
                             break;
                         case 4:
                             printf("Displaying a single student by ID.\n");
-                            // Call the corresponding function to display a single student by ID
+                            printf("\nPlease Enter a specific Student ID: ");
+                            scanf("%d", &studentID);
+                            displayStudentByID(filename, studentID);
                             break;
                         case 5:
                             printf("\nDisplaying students within a GPA range.\n");
