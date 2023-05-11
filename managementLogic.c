@@ -596,6 +596,3 @@ void displayStudentsWithinCreditsRange(const char *filename, int minCredits, int
 
     fclose(file);
 }
-
-
-
