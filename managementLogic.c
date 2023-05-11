@@ -65,7 +65,7 @@ int addStudent(const char *filename) {
     printf("Enter student school (SBA/SHSS/SSE): ");
     scanf(" %[^\n]", student.school);
 
-    printf("Enter student major: ");
+    printf("Enter student major (CSC/BA): ");
     scanf(" %[^\n]", student.major);
 
     printf("Enter student credits (0-140): ");
@@ -132,7 +132,7 @@ int modifyStudent(const char *filename) {
     printf("Enter modified school (SBA/SHSS/SSE): ");
     scanf(" %[^\n]", student.school);
 
-    printf("Enter modified major: ");
+    printf("Enter modified major (CSC/BA): ");
     scanf(" %[^\n]", student.major);
 
     printf("Enter modified credits (0-140): ");
