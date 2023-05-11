@@ -57,10 +57,21 @@ int addStudent(const char *filename) {
     }
 
     printf("Enter your full name (e.g., John Doe): ");
-    scanf(" %[^\n]", student.name);
+    getchar(); // Clear the newline character from the previous input
+    fgets(student.name, sizeof(student.name), stdin);
+    student.name[strcspn(student.name, "\n")] = '\0'; // Remove the newline
 
     printf("Enter student birth date (yyyy-mm-dd): ");
-    scanf(" %[^\n]", student.birthDate);
+    fgets(student.birthDate, sizeof(student.birthDate), stdin);
+    student.birthDate[strcspn(student.birthDate, "\n")] = '\0';
+
+    // Validate the birth date format
+    int year, month, day;
+    if (sscanf(student.birthDate, "%d-%d-%d", &year, &month, &day) != 3) {
+        printf("Invalid birth date format. Please use yyyy-mm-dd.\n");
+        fclose(file);
+        return 0;
+    }
 
     printf("Enter student school (SBA/SHSS/SSE): ");
     scanf(" %[^\n]", student.school);
@@ -78,6 +89,7 @@ int addStudent(const char *filename) {
     scanf(" %[^\n]", student.entrySemester);
 
     fprintf(file, "%d,%s,%s,%s,%s,%d,%.2f,%s\n", student.id, student.name, student.birthDate, student.school, student.major, student.credits, student.cgpa, student.entrySemester);
+
 
     fclose(file);
     printf("\n\n----> Student added successfully.\n\n");
@@ -123,11 +135,22 @@ int modifyStudent(const char *filename) {
     }
 
     Student student;
-    printf("Enter modified full name (e.g., John Doe): ", student.name);
-    scanf(" %[^\n]", student.name);
+    printf("Enter modified full name (e.g., John Doe): ");
+    getchar(); // Clear the newline character from the previous input
+    fgets(student.name, sizeof(student.name), stdin);
+    student.name[strcspn(student.name, "\n")] = '\0'; // Remove the newline
 
     printf("Enter modified birth date (yyyy-mm-dd): ");
-    scanf(" %[^\n]", student.birthDate);
+    fgets(student.birthDate, sizeof(student.birthDate), stdin);
+    student.birthDate[strcspn(student.birthDate, "\n")] = '\0';
+
+    // Validate the modified birth date format
+    int year, month, day;
+    if (sscanf(student.birthDate, "%d-%d-%d", &year, &month, &day) != 3) {
+        printf("Invalid birth date format. Please use yyyy-mm-dd.\n");
+        fclose(file);
+        return 0;
+    }
 
     printf("Enter modified school (SBA/SHSS/SSE): ");
     scanf(" %[^\n]", student.school);
@@ -190,15 +213,10 @@ int deleteStudent(const char *filename) {
     fclose(file);
     fclose(tempFile);
 
-    if (remove(filename) != 0) {
-        printf("Error deleting original file.\n");
-        return 0;
-    }
-
-    if (rename("temp.txt", filename) != 0) {
-        printf("Error renaming temporary file.\n");
-        return 0;
-    }
+    // Remove the original file
+    remove(filename);
+    // Rename the temporary file to the original filename
+    rename("temp.txt", filename);
 
     printf("\n\n----> Student with ID %d deleted successfully.\n\n", studentId);
     return 1;
