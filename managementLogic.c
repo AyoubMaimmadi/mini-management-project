@@ -13,6 +13,27 @@ typedef struct {
     char entrySemester[15];
 } Student;
 
+int isValidDateFormat(const char *date) {
+    // Validate the birth date format (yyyy-mm-dd)
+    int year, month, day;
+    if (sscanf(date, "%d-%d-%d", &year, &month, &day) != 3) {
+        return 0;
+    }
+    return 1;
+}
+
+int isValidBirthYear(int year) {
+    // Check if the birth year falls within a specific range
+    return (year >= 1900 && year <= 2023);
+}
+
+int isValidCredit(int credits) {
+    return (credits >= 0 && credits <= 140);
+}
+
+int isValidCGPA(float cgpa) {
+    return (cgpa >= 0 && cgpa <= 4);
+}
 
 
 int studentExists(int id, const char *filename) {
@@ -66,9 +87,18 @@ int addStudent(const char *filename) {
     student.birthDate[strcspn(student.birthDate, "\n")] = '\0';
 
     // Validate the birth date format
-    int year, month, day;
-    if (sscanf(student.birthDate, "%d-%d-%d", &year, &month, &day) != 3) {
+    if (!isValidDateFormat(student.birthDate)) {
         printf("Invalid birth date format. Please use yyyy-mm-dd.\n");
+        fclose(file);
+        return 0;
+    }
+
+    int year;
+    sscanf(student.birthDate, "%d", &year);
+
+    // Check if the birth year falls within the specified range
+    if (!isValidBirthYear(year)) {
+        printf("Invalid birth year. Please enter a value between 1900 and 2023.\n");
         fclose(file);
         return 0;
     }
@@ -82,8 +112,21 @@ int addStudent(const char *filename) {
     printf("Enter student credits (0-140): ");
     scanf("%d", &student.credits);
 
+     // Check if the credits fall within the specified range
+    if (!isValidCredit(student.credits)) {
+        printf("Invalid credits. Please enter a value between 0 and 140.\n");
+        fclose(file);
+        return 0;
+    }
+
     printf("Enter student CGPA (0-4): ");
     scanf("%f", &student.cgpa);
+
+    if (!isValidCGPA(student.cgpa)) {
+        printf("Invalid CGPA. Please enter a value between 0 and 4.\n");
+        fclose(file);
+        return 0;
+    }
 
     printf("Enter student entry semester (e.g., Fall 2021): ");
     scanf(" %[^\n]", student.entrySemester);
@@ -145,9 +188,18 @@ int modifyStudent(const char *filename) {
     student.birthDate[strcspn(student.birthDate, "\n")] = '\0';
 
     // Validate the modified birth date format
-    int year, month, day;
-    if (sscanf(student.birthDate, "%d-%d-%d", &year, &month, &day) != 3) {
+    if (!isValidDateFormat(student.birthDate)) {
         printf("Invalid birth date format. Please use yyyy-mm-dd.\n");
+        fclose(file);
+        return 0;
+    }
+
+    int year;
+    sscanf(student.birthDate, "%d", &year);
+
+    // Check if the birth year falls within the specified range
+    if (!isValidBirthYear(year)) {
+        printf("Invalid birth year. Please enter a value between 1900 and 2023.\n");
         fclose(file);
         return 0;
     }
@@ -161,8 +213,21 @@ int modifyStudent(const char *filename) {
     printf("Enter modified credits (0-140): ");
     scanf("%d", &student.credits);
 
+    // Check if the credits fall within the specified range
+    if (!isValidCredit(student.credits)) {
+        printf("Invalid credits. Please enter a value between 0 and 140.\n");
+        fclose(file);
+        return 0;
+    }
+
     printf("Enter modified CGPA (0-4): ");
     scanf("%f", &student.cgpa);
+
+    if (!isValidCGPA(student.cgpa)) {
+        printf("Invalid CGPA. Please enter a value between 0 and 4.\n");
+        fclose(file);
+        return 0;
+    }
 
     printf("Enter modified entry semester (e.g., Fall 2021): ");
     scanf(" %[^\n]", student.entrySemester);
