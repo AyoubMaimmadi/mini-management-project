@@ -12,8 +12,6 @@ void Menu() {
     printf("=============== 5. Change Credentials \n");
     printf("=============== 6. Log out \n");
     printf("================================================================\n\n");
-
-    
 }
 
 void displayOptions() {

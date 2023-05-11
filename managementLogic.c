@@ -35,7 +35,6 @@ int isValidCGPA(float cgpa) {
     return (cgpa >= 0 && cgpa <= 4);
 }
 
-
 int studentExists(int id, const char *filename) {
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
@@ -57,7 +56,6 @@ int studentExists(int id, const char *filename) {
     fclose(file);
     return found;
 }
-
 
 //////////////////////////////////////// Add Student ////////////////////////////////////////
 int addStudent(const char *filename) {
@@ -139,9 +137,7 @@ int addStudent(const char *filename) {
     return 1; // Return success status
 }
 
-
 ////////////////////////////////////// Modify Student Information //////////////////////////////////////
-
 int modifyStudent(const char *filename) {
     FILE *file = fopen(filename, "r+");
     if (file == NULL) {
@@ -426,7 +422,7 @@ void displayStudentsSortedByRegistrationOrder(const char *filename) {
     }
 }
 
-
+////////////////////////////////////// displayStudentsSortedByID //////////////////////////////////////
 void displayStudentsSortedByID(const char *filename, int sortOrder) {
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
@@ -479,7 +475,6 @@ void displayStudentsSortedByID(const char *filename, int sortOrder) {
                students[i].entrySemester);
     }
 }
-
 
 //////////////////// displayStudentByID //////////////////////////////////////
 void displayStudentByID(const char *filename, int id) {

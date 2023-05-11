@@ -43,7 +43,6 @@ int wordCompare(const char *str1, const char *str2) {
     return 0;  // Both strings are equal
 }
 
-
 void wordCleanUp(char *str) {
   int length = wordLength(str);
   if (length > 0 && str[length - 1] == '\n') {
@@ -80,8 +79,6 @@ int checkCredentials(User *user, const char *filename) {
 
     return found;
 }
-
-
 
 int attemptLogin(int maxAttempts, User *user, const char *filename) {
     int attempts = 0;
