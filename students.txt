@@ -8,3 +8,6 @@
 8,Amy Wilson,2003-08-22,SSE,ME,81,3.25,Spring 2023
 9,Brian Roberts,2001-04-07,SBE,FIN,90,3.70,Fall 2021
 10,Megan Turner,2003-12-01,SBE,HRM,95,3.85,Spring 2022
+11,Yassine Elaami,2005-03-12,SBA,BA,99,3.20,Fall 2018
+12,Zineb Maimmadi,2020-12-12,SSE,SQS,121,3.40,Fall 2023
+13,Lina Maimmadi,2004-11-12,SSE,CSC,130,3.90,Fall 2022
