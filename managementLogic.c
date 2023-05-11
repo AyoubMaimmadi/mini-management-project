@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h> 
 
+// Student struct
 typedef struct {
     int id;
     char name[50];
@@ -13,6 +14,7 @@ typedef struct {
     char entrySemester[15];
 } Student;
 
+// function that checks if the date format is valid
 int isValidDateFormat(const char *date) {
     // Validate the birth date format (yyyy-mm-dd)
     int year, month, day;
@@ -22,19 +24,23 @@ int isValidDateFormat(const char *date) {
     return 1;
 }
 
+// function that checks if the birth year is valid
 int isValidBirthYear(int year) {
     // Check if the birth year falls within a specific range
     return (year >= 1900 && year <= 2023);
 }
 
+// function that checks if the credits is within the range (0-140)
 int isValidCredit(int credits) {
     return (credits >= 0 && credits <= 140);
 }
 
+// function that checks if the cgpa is within the range (0-4)
 int isValidCGPA(float cgpa) {
     return (cgpa >= 0 && cgpa <= 4);
 }
 
+// function that checks if the student exists in the file
 int studentExists(int id, const char *filename) {
     FILE *file = fopen(filename, "r");
     if (file == NULL) {

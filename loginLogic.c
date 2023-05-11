@@ -3,11 +3,13 @@
 #include <ctype.h>
 #include <string.h> 
 
+//defining the max length of important variables
 #define MAX_NAME_LENGTH 50
 #define MAX_USERNAME_LENGTH 50
 #define MAX_PASSWORD_LENGTH 50
 #define MAX_LINE_LENGTH (MAX_USERNAME_LENGTH + MAX_PASSWORD_LENGTH + 2)
 
+//defining the user struct
 typedef struct {
     char name[MAX_NAME_LENGTH];
     char username[MAX_USERNAME_LENGTH];
@@ -15,7 +17,7 @@ typedef struct {
 } User;
 
 
-
+// funtions that return the length of a word
 int wordLength(const char *str) {
   int length = 0;
   while (str[length] != '\0') {
@@ -24,6 +26,7 @@ int wordLength(const char *str) {
   return length;
 }
 
+// function that compares two words if they are similar
 int wordCompare(const char *str1, const char *str2) {
     int i = 0;
     while (str1[i] != '\0' && str2[i] != '\0') {
@@ -43,6 +46,7 @@ int wordCompare(const char *str1, const char *str2) {
     return 0;  // Both strings are equal
 }
 
+// function that cleans up the word from the new line character
 void wordCleanUp(char *str) {
   int length = wordLength(str);
   if (length > 0 && str[length - 1] == '\n') {
@@ -50,6 +54,7 @@ void wordCleanUp(char *str) {
   }
 }
 
+// function that checks the credentials of the user if they are valid by comparing them to the users file
 int checkCredentials(User *user, const char *filename) {
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
@@ -80,6 +85,7 @@ int checkCredentials(User *user, const char *filename) {
     return found;
 }
 
+// function that attempts to login the user by asking for their username and password 
 int attemptLogin(int maxAttempts, User *user, const char *filename) {
     int attempts = 0;
 
@@ -106,6 +112,7 @@ int attemptLogin(int maxAttempts, User *user, const char *filename) {
     return 0;
 }
 
+// function that validates the password of the user, making sure it has all the necessary requirements
 int validatePassword(const char *password) {
     int length = wordLength(password);
 
@@ -140,6 +147,7 @@ int validatePassword(const char *password) {
     return 1;
 }
 
+// function that changes the credentials of the user, either the username, password or both
 void changeCredentials(User *user, const char *filename) {
     FILE *file = fopen(filename, "r");
     if (file == NULL) {

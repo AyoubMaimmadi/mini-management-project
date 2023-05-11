@@ -1,8 +1,11 @@
+// importing the functions from the managementLogic file
 #include "managementLogic.c"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h> 
 
+//Creating a menu function that displays the menu
 void Menu() {
     printf("============================= MENU ============================\n");
     printf("=============== 1. Add a new student to the List \n");
@@ -14,6 +17,7 @@ void Menu() {
     printf("================================================================\n\n");
 }
 
+//Creating a display options function that displays the options for the display filter
 void displayOptions() {
     printf("\n=================== Display Options ==========================\n");
     printf("=== 0. Display all students \n");
@@ -27,6 +31,7 @@ void displayOptions() {
     printf("================================================================\n\n");
 }
 
+//Creating a functionality choice function that displays the menu and asks the user to choose an action to perform
 void functionalityChoice(const char *studentFile, User *user, const char *usersFile) {
     int choice;
     int sortChoice; 
@@ -34,13 +39,13 @@ void functionalityChoice(const char *studentFile, User *user, const char *usersF
     float minGPA, maxGPA;
     int minCredits, maxCredits;
 
-
+    // Loop until the user chooses to exit
     while (1) {
         Menu();
         printf("\nPlease choose an action to perform (you must type number): ");
         scanf("%d", &choice);
         getchar(); // Clear the newline character from the input buffer
-
+        // Switch statement to perform the action based on the user's choice
         switch (choice) {
             case 1:
                 printf("\nAdd a new student, if student ID already exists, try modifying.\n");
@@ -58,6 +63,7 @@ void functionalityChoice(const char *studentFile, User *user, const char *usersF
                 printf("\nDelete Student Information by given ID.\n");
                 deleteStudent(studentFile);
                 break;
+            // Displaying the filtered student information by entering another switch statement
             case 4:
                 printf("\nDisplay Filtered student information.\n");
                 while (1) {
@@ -124,7 +130,9 @@ void functionalityChoice(const char *studentFile, User *user, const char *usersF
                 break;
             case 6:
                 printf("\nLogged out successfully. Please run the program (main.c) to log back in.\n\n");
+                // exit the program by returning  
                 return; 
+            // If the user enters a choice that is not recognized, display an error message
             default:
                 printf("\nSorry, this choice is not recognized! \n\n");
                 break;
