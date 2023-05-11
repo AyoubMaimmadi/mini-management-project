@@ -27,7 +27,7 @@ int isValidDateFormat(const char *date) {
 // function that checks if the birth year is valid
 int isValidBirthYear(int year) {
     // Check if the birth year falls within a specific range
-    return (year >= 1900 && year <= 2023);
+    return (year >= 1995 && year <= 2010);
 }
 
 // function that checks if the credits is within the range (0-140)
@@ -458,7 +458,7 @@ void displayStudentsSortedByID(const char *filename, int sortOrder) {
     for (int i = 0; i < count - 1; i++) {
         for (int j = 0; j < count - i - 1; j++) {
             if ((sortOrder == 1 && students[j].id > students[j + 1].id) ||
-                (sortOrder == 0 && students[j].id < students[j + 1].id)) {
+                (sortOrder == 2 && students[j].id < students[j + 1].id)) {
                 // Swap the students
                 Student temp = students[j];
                 students[j] = students[j + 1];
