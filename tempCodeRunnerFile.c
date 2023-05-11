@@ -1,0 +1,1 @@
+functionalityChoice(STUDENTS, USERS, &user);

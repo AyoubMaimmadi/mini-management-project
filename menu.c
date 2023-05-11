@@ -11,7 +11,8 @@ void Menu() {
     printf("=============== 2. Modify Student Information \n");
     printf("=============== 3. Delete a Student \n");
     printf("=============== 4. Display Filtered student information \n");
-    printf("=============== 5. Log out!! \n");
+    printf("=============== 5. Change Credentials \n");
+    printf("=============== 6. Log out \n");
     printf("================================================================\n\n");
 
     
@@ -30,7 +31,7 @@ void displayOptions() {
     printf("================================================================\n\n");
 }
 
-void functionalityChoice(const char *filename) {
+void functionalityChoice(const char *studentFile) {
     int choice;
     int sortChoice; 
     int studentID;
@@ -48,18 +49,18 @@ void functionalityChoice(const char *filename) {
             case 1:
                 printf("\nAdd a new student, if student ID already exists, try modifying.\n");
                 while (1) {
-                    int added = addStudent(filename);
+                    int added = addStudent(studentFile);
                     if (added)
                         break;
                 }
                 break;
             case 2:
                 printf("\nModify Student Information by given ID.\n");
-                modifyStudent(filename);
+                modifyStudent(studentFile);
                 break;
             case 3:
                 printf("\nDelete Student Information by given ID.\n");
-                deleteStudent(filename);
+                deleteStudent(studentFile);
                 break;
             case 4:
                 printf("\nDisplay Filtered student information.\n");
@@ -71,26 +72,26 @@ void functionalityChoice(const char *filename) {
                     switch (choice) {
                         case 0: 
                             printf("\nDisplaying all students.\n");
-                            displayAllStudents(filename);
+                            displayAllStudents(studentFile);
                             break;
                         case 1:
                             printf("\nDisplaying all students in registration order.\n");
-                            displayStudentsSortedByRegistrationOrder(filename);
+                            displayStudentsSortedByRegistrationOrder(studentFile);
                             break;
                         case 2:
                             printf("\nDisplaying all students sorted by name.\n");
-                            displayStudentsSortedByName(filename);
+                            displayStudentsSortedByName(studentFile);
                             break;
                         case 3:
                             printf("\nPlease choose a sort order (1: asc, 2: desc): ");
                             scanf("%d", &sortChoice);
-                            displayStudentsSortedByID(filename, sortChoice);
+                            displayStudentsSortedByID(studentFile, sortChoice);
                             break;
                         case 4:
                             printf("Displaying a single student by ID.\n");
                             printf("\nPlease Enter a specific Student ID: ");
                             scanf("%d", &studentID);
-                            displayStudentByID(filename, studentID);
+                            displayStudentByID(studentFile, studentID);
                             break;
                         case 5:
                             printf("\nDisplaying students within a GPA range.\n");
@@ -98,7 +99,7 @@ void functionalityChoice(const char *filename) {
                             scanf("%f", &minGPA);
                             printf("Please enter the maximum GPA: ");
                             scanf("%f", &maxGPA);
-                            displayStudentsWithinGPARange(filename, minGPA, maxGPA);
+                            displayStudentsWithinGPARange(studentFile, minGPA, maxGPA);
                             break;
                        case 6:
                             printf("\nDisplaying students within a credits range.\n");
@@ -106,7 +107,7 @@ void functionalityChoice(const char *filename) {
                             scanf("%d", &minCredits);
                             printf("Please enter the maximum credits: ");
                             scanf("%d", &maxCredits);
-                            displayStudentsWithinCreditsRange(filename, minCredits, maxCredits);
+                            displayStudentsWithinCreditsRange(studentFile, minCredits, maxCredits);
                             break;
 
                         case 7:
@@ -122,8 +123,12 @@ void functionalityChoice(const char *filename) {
                 }
                 break;
             case 5:
-                printf("\nLogged out successfully. Please run the program (main.c) to log back in.\nd\n");
-                return; // Exit the function and return to the caller
+                printf("\nChange Credentials.\n\n");
+                // changeCredentials(); 
+                break;
+            case 6:
+                printf("\nLogged out successfully. Please run the program (main.c) to log back in.\n\n");
+                return; 
             default:
                 printf("\nSorry, this choice is not recognized! \n\n");
                 break;
