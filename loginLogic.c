@@ -152,6 +152,7 @@ void changeCredentials(User *user, const char *filename) {
 
     char currentPassword[MAX_PASSWORD_LENGTH];
     char newPassword[MAX_PASSWORD_LENGTH];
+    char newUsername[MAX_USERNAME_LENGTH];
 
     printf("Enter your current password: ");
     fgets(currentPassword, MAX_PASSWORD_LENGTH, stdin);
@@ -163,13 +164,49 @@ void changeCredentials(User *user, const char *filename) {
         return;
     }
 
-    printf("Enter your new password: ");
-    fgets(newPassword, MAX_PASSWORD_LENGTH, stdin);
-    wordCleanUp(newPassword);
+    int changeUsername = 0;
+    int changePassword = 0;
 
-    if (!validatePassword(newPassword)) {
-        fclose(file);
-        return;
+    printf("Choose an option:\n");
+    printf("1. Change username\n");
+    printf("2. Change password\n");
+    printf("3. Change both username and password\n");
+    printf("Enter your choice: ");
+    int choice;
+    scanf("%d", &choice);
+    getchar(); // Clear the newline character from the input buffer
+
+    if (choice == 1 || choice == 3) {
+        printf("Enter your new username: ");
+        fgets(newUsername, MAX_USERNAME_LENGTH, stdin);
+        wordCleanUp(newUsername);
+
+        if (wordCompare(user->username, newUsername) == 0) {
+            printf("New username is the same as the current username.\n");
+            fclose(file);
+            return;
+        }
+
+        changeUsername = 1;
+    }
+
+    if (choice == 2 || choice == 3) {
+        printf("Enter your new password: ");
+        fgets(newPassword, MAX_PASSWORD_LENGTH, stdin);
+        wordCleanUp(newPassword);
+
+        if (wordCompare(user->password, newPassword) == 0) {
+            printf("New password is the same as the current password.\n");
+            fclose(file);
+            return;
+        }
+
+        if (!validatePassword(newPassword)) {
+            fclose(file);
+            return;
+        }
+
+        changePassword = 1;
     }
 
     FILE *tempFile = fopen("temp.txt", "w");
@@ -191,7 +228,16 @@ void changeCredentials(User *user, const char *filename) {
 
         if (wordCompare(user->username, stored_username) == 0 &&
             wordCompare(user->password, stored_password) == 0) {
-            strncpy(stored_password, newPassword, MAX_PASSWORD_LENGTH);
+            if (changeUsername) {
+                strncpy(stored_username, newUsername, MAX_USERNAME_LENGTH);
+                strncpy(user->username, newUsername, MAX_USERNAME_LENGTH);
+                        }
+            
+            if (changePassword) {
+                strncpy(stored_password, newPassword, MAX_PASSWORD_LENGTH);
+                strncpy(user->password, newPassword, MAX_PASSWORD_LENGTH);
+            }
+            
             credentialsChanged = 1;
         }
 
@@ -210,7 +256,6 @@ void changeCredentials(User *user, const char *filename) {
     remove(filename);
     rename("temp.txt", filename);
 
-    strncpy(user->password, newPassword, MAX_PASSWORD_LENGTH);
-
-    printf("Credentials changed successfully.\n");
+    printf("\nCredentials changed successfully.\n");
 }
+
