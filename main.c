@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+// this is the structure of the student
 typedef struct {
     int id;
     char name[50];
@@ -13,18 +14,19 @@ typedef struct {
     char entrySemester[15];
 } Student;
 
+// this is the menu function
 void showMenu() {
     printf("1 -> Add Student\n");
     printf("2 -> Modify Student Information\n");
-    printf("3 -> Display student with specific ID\n");
+    printf("3 -> Display student with specific id\n");
     printf("4 -> Load students from file\n");
     printf("5 -> Save all modifications to students file\n");
     printf("6 -> Modify User Password\n");
-    printf("8 -> Log out\n");
-    printf("Options, please type a number: \n");
+    printf("7 -> Log out\n");
+    printf("Please choose an option: \n");
 }
 
-
+// this is the function to save the added student to the file students.txt
 void saveStudentToFile(const Student *student) {
     FILE* file = fopen("students.txt", "a");
     if (file == NULL) {
@@ -41,7 +43,7 @@ void saveStudentToFile(const Student *student) {
     printf("Student saved successfully to students.txt.\n");
 }
 
-
+// this is the function to add a student by typing the information and then save it to the array of students
 int addStudent(Student *students, int *numStudents) {
     Student student;
     printf("Type the student ID: ");
@@ -72,10 +74,11 @@ int addStudent(Student *students, int *numStudents) {
     students[*numStudents] = student;
     (*numStudents)++;
 
-    printf("Student added successfully to the student array.\n");
+    printf("Student added successfully to the students array.\n");
     return 1;
 }
 
+// this is the function to find the index of the student by a given id
 int findStudentIndex(int id, const Student *students, int numStudents) {
     for (int i = 0; i < numStudents; i++) {
         if (students[i].id == id) {
@@ -85,48 +88,50 @@ int findStudentIndex(int id, const Student *students, int numStudents) {
     return -1;
 }
 
+// this is a function to modify student informations by a given id 
 int modifyStudent(Student *students, int numStudents) {
     int studentId;
-    printf("Type the student ID to modify: ");
+    printf("Type the student ID you want to modify: ");
     scanf("%d", &studentId);
 
     int studentIndex = findStudentIndex(studentId, students, numStudents);
     if (studentIndex == -1) {
-        printf("Cant fin this student ");
+        printf("This id does not exist.\n ");
         return 0;
     }
 
     Student *student = &students[studentIndex];
 
-    printf("Type the modified full name: ");
+    printf("Type the new full name: ");
     scanf(" %[^\n]", student->name);
 
-    printf("Type the modified birth date (yyyymmdd): ");
+    printf("Type the new birth date (yyyymmdd): ");
     scanf(" %[^\n]", student->birthDate);
 
-    printf("Type the modified school (SBA/SHSS/SSE): ");
+    printf("Type the new school: ");
     scanf(" %[^\n]", student->school);
 
-    printf("Type the modified major: ");
+    printf("Type the new major: ");
     scanf(" %[^\n]", student->major);
 
-    printf("Type the modified credits (0-140): ");
+    printf("Type the new credits: ");
     scanf("%d", &student->credits);
 
-    printf("Type the modified CGPA (0-4): ");
+    printf("Type the new GPA: ");
     scanf("%f", &student->cgpa);
 
-    printf("Type the modified entry semester (e.g., Fall 2021): ");
+    printf("Type the new starting semester: ");
     scanf(" %[^\n]", student->entrySemester);
 
-    printf("Student with ID %d modified successfully.\n", studentId);
+    printf("Student modified successfully.\n");
     return 1;
 }
 
+// this is the function to display a specific student informations by a given id
 void displayStudent(const Student *students, int numStudents, int studentId) {
     int studentIndex = findStudentIndex(studentId, students, numStudents);
     if (studentIndex == -1) {
-        printf("Student with ID %d does not exist.\n", studentId);
+        printf("Student is not found.\n", studentId);
         return;
     }
 
@@ -142,13 +147,15 @@ void displayStudent(const Student *students, int numStudents, int studentId) {
     printf("Starting Semester: %s\n", student->entrySemester);
 }
 
+// this is the function to load all the students informations from the file students.txt
 void loadStudentsFromFile(Student *students, int *numStudents) {
     FILE* file = fopen("students.txt", "r");
     if (file == NULL) {
         printf("Failed to open the file.\n");
         return;
     }
-
+    
+    // while it is not the end of the file it will read the informations and save it to the array of students to be displayed later
     while (!feof(file)) {
         Student student;
         fscanf(file, "%d,%[^,],%[^,],%[^,],%[^,],%d,%f,%[^\n]\n",
@@ -162,6 +169,7 @@ void loadStudentsFromFile(Student *students, int *numStudents) {
     fclose(file);
 }
 
+// this is the function to display all the students informations from the loaded file data
 void displayAllStudents(const Student *students, int numStudents) {
     printf("Students:\n");
     for (int i = 0; i < numStudents; i++) {
@@ -178,6 +186,7 @@ void displayAllStudents(const Student *students, int numStudents) {
     }
 }
 
+// this is a function to save any modifications to the file students.txt
 void saveStudentsToFile(const Student *students, int numStudents) {
     FILE* file = fopen("students.txt", "w");
     if (file == NULL) {
@@ -185,6 +194,7 @@ void saveStudentsToFile(const Student *students, int numStudents) {
         return;
     }
 
+    // loop over the array of students and print the modifications to the file students.txt
     for (int i = 0; i < numStudents; i++) {
         const Student *student = &students[i];
         fprintf(file, "%d,%s,%s,%s,%s,%d,%.2f,%s\n",
@@ -194,9 +204,10 @@ void saveStudentsToFile(const Student *students, int numStudents) {
 
     fclose(file);
 
-    printf("Modifications saved successfully to students.txt.\n");
+    printf("Students file updated.\n");
 }
 
+// this is a functions to change the password of the user by a given username 
 void modifyUserPassword(const char *username, const char *newPassword) {
     FILE* file = fopen("users.txt", "r");
     if (file == NULL) {
@@ -204,6 +215,7 @@ void modifyUserPassword(const char *username, const char *newPassword) {
         return;
     }
 
+    // create a temporary file to save the new password to it
     FILE* tempFile = fopen("temp_users.txt", "w");
     if (tempFile == NULL) {
         printf("Failed to open the temporary file.\n");
@@ -214,11 +226,13 @@ void modifyUserPassword(const char *username, const char *newPassword) {
     char line[100];
     int modified = 0;
 
+    // loop over the file and check if the username is found or not
     while (fgets(line, sizeof(line), file) != NULL) {
         char storedUsername[50];
         char storedPassword[50];
         sscanf(line, "%s %s", storedUsername, storedPassword);
 
+        // if the username is found it will change the password and save it to the temporary file
         if (strcmp(storedUsername, username) == 0) {
             fprintf(tempFile, "%s %s\n", username, newPassword);
             modified = 1;
@@ -230,12 +244,14 @@ void modifyUserPassword(const char *username, const char *newPassword) {
     fclose(file);
     fclose(tempFile);
 
+    // if the username is not found it will print a message to the user
     if (!modified) {
         printf("Username not found.\n");
         remove("temp_users.txt");
         return;
     }
 
+    // remove the old file and rename the temporary file to the old file name
     remove("users.txt");
     rename("temp_users.txt", "users.txt");
 
@@ -243,52 +259,43 @@ void modifyUserPassword(const char *username, const char *newPassword) {
 }
 
 
-
-
 void performAction(int choice, Student *students, int *numStudents) {
-    switch (choice) {
-        case 1:
-            while (1) {
-                int added = addStudent(students, numStudents);
-                if (added)
-                    break;
-            }
-            break;
-        case 2:
-            printf("Modify Student.\n");
-            modifyStudent(students, *numStudents);
-            break;
-        case 3:
-            printf("Display student information.\n");
-            int studentId;
-            printf("Type the student ID, try IDs 1, or 2: ");
-            scanf("%d", &studentId);
-            displayStudent(students, *numStudents, studentId);
-            break;
-        case 4:
-            printf("Load all students from file (students.txt).\n");
-            loadStudentsFromFile(students, numStudents);
-            displayAllStudents(students, *numStudents);
-            break;
-        case 5:
-            printf("Save modifications to students.txt.\n");
-            saveStudentsToFile(students, *numStudents);
-            break;
-        case 6:
-            printf("Modify User Password.\n");
-            char username[50];
-            char newPassword[50];
-            printf("Type the username to modify password: ");
-            scanf("%s", username);
-            printf("Type the new password: ");
-            scanf("%s", newPassword);
-            modifyUserPassword(username, newPassword);
-            break;
-        case 8:
-            printf("Goodbye!\n");
-            exit(0);
-        default:
-            printf("Invalid choice.\n");
+    if (choice == 1) {
+        while (1) {
+            int added = addStudent(students, numStudents);
+            if (added)
+                break;
+        }
+    } else if (choice == 2) {
+        printf("Modify Student.\n");
+        modifyStudent(students, *numStudents);
+    } else if (choice == 3) {
+        printf("Display student information.\n");
+        int studentId;
+        printf("Type the student ID, try IDs 1, or 2: ");
+        scanf("%d", &studentId);
+        displayStudent(students, *numStudents, studentId);
+    } else if (choice == 4) {
+        printf("Load all students from file (students.txt).\n");
+        loadStudentsFromFile(students, numStudents);
+        displayAllStudents(students, *numStudents);
+    } else if (choice == 5) {
+        printf("Save modifications to students.txt.\n");
+        saveStudentsToFile(students, *numStudents);
+    } else if (choice == 6) {
+        printf("Modify User Password.\n");
+        char username[50];
+        char newPassword[50];
+        printf("Type the username to modify password: ");
+        scanf("%s", username);
+        printf("Type the new password: ");
+        scanf("%s", newPassword);
+        modifyUserPassword(username, newPassword);
+    } else if (choice == 7) {
+        printf("Goodbye!\n");
+        exit(0);
+    } else {
+        printf("Invalid choice.\n");
     }
 }
 
@@ -299,11 +306,11 @@ int main() {
     Student students[MAX_STUDENTS];
     int numStudents = 0;
 
-    // Hardcoded student data (for demonstration purposes)
+    // Hardcoded student data
     Student student1;
     student1.id = 1;
     strcpy(student1.name, "John Doe");
-    strcpy(student1.birthDate, "1998-05-15");
+    strcpy(student1.birthDate, "19980515");
     strcpy(student1.school, "SSE");
     strcpy(student1.major, "CSC");
     student1.credits = 90;
@@ -315,7 +322,7 @@ int main() {
     Student student2;
     student2.id = 2;
     strcpy(student2.name, "Jane Smith");
-    strcpy(student2.birthDate, "1999-03-22");
+    strcpy(student2.birthDate, "19990322");
     strcpy(student2.school, "SHSS");
     strcpy(student2.major, "CSC");
     student2.credits = 75;
@@ -324,6 +331,7 @@ int main() {
 
     students[numStudents++] = student2;
 
+    // login functionality
     char username[50];
     char password[50];
     printf("Type your username to login: ");
@@ -337,6 +345,7 @@ int main() {
         return 1;
     }
 
+    // loop over the file and check if the username and password are correct or not
     char line[100];
     int loginSuccess = 0;
     while (fgets(line, sizeof(line), file) != NULL) {
@@ -344,6 +353,7 @@ int main() {
         char storedPassword[50];
         sscanf(line, "%s %s", storedUsername, storedPassword);
 
+        // if the username and password are found it will change the boolean value of loginSuccess = 1
         if (strcmp(storedUsername, username) == 0 && strcmp(storedPassword, password) == 0) {
             loginSuccess = 1;
             break;
@@ -359,13 +369,15 @@ int main() {
 
     printf("Welcome!\n");
     int choice;
+    
+    // loop over the menu and perform the action based on the user choice untill the user choose to logout
     while (1) {
         showMenu();
         printf("Type your choice: ");
         scanf("%d", &choice);
 
         if (choice == 8) {
-            printf("Logging out...\n");
+            printf("Loging out...\n");
             break;  
         }
 
