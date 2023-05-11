@@ -17,7 +17,7 @@ int main() {
     success = attemptLogin(MAX_ATTEMPTS, &user, USERS);
 
     if (success) {
-        printf("Welcome, %s!, this is a platform where you can add, modify, select, and delete students from a small text file database\n\n", user.name);
+        printf("\nWelcome, %s!, this is a platform where you can add, modify, select, and delete students from a small text file database\n\n", user.name);
         functionalityChoice(STUDENTS);
     } else {
         printf("Max attempts reached. Access denied.\n\n");

@@ -123,7 +123,7 @@ int modifyStudent(const char *filename) {
     }
 
     Student student;
-    printf("Enter modified full name: ");
+    printf("Enter modified full name (e.g., John Doe): ", student.name);
     scanf(" %[^\n]", student.name);
 
     printf("Enter modified birth date (yyyy-mm-dd): ");
