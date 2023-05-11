@@ -15,7 +15,7 @@ typedef struct {
 
 
 
-int studentExist(int id, const char *filename) {
+int studentExists(int id, const char *filename) {
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         printf("Error opening file.\n");
@@ -50,7 +50,7 @@ int addStudent(const char *filename) {
     printf("Enter student ID (must be a unique number): ");
     scanf("%d", &student.id);
 
-    if (studentExist(student.id, filename)) {
+    if (studentExists(student.id, filename)) {
         printf("A student with the same ID already exists.\n");
         fclose(file);
         return 0;
@@ -80,7 +80,7 @@ int addStudent(const char *filename) {
     fprintf(file, "%d,%s,%s,%s,%s,%d,%.2f,%s\n", student.id, student.name, student.birthDate, student.school, student.major, student.credits, student.cgpa, student.entrySemester);
 
     fclose(file);
-    printf("----> Student added successfully.\n\n");
+    printf("\n\n----> Student added successfully.\n\n");
     return 1; // Return success status
 }
 
@@ -98,7 +98,7 @@ int modifyStudent(const char *filename) {
     printf("Enter student ID to modify: ");
     scanf("%d", &studentId);
 
-    if (!studentExist(studentId, filename)) {
+    if (!studentExists(studentId, filename)) {
         printf("Student with ID %d does not exist.\n", studentId);
         fclose(file);
         return 0;
@@ -148,6 +148,58 @@ int modifyStudent(const char *filename) {
     fprintf(file, "%d,%s,%s,%s,%s,%d,%.2f,%s\n", studentId, student.name, student.birthDate, student.school, student.major, student.credits, student.cgpa, student.entrySemester);
 
     fclose(file);
-    printf("----> Student with ID %d modified successfully.\n\n", studentId);
+    printf("\n\n----> Student with ID %d modified successfully.\n\n", studentId);
     return 1; 
+}
+
+////////////////////////////////////// Delete Student //////////////////////////////////////
+
+int deleteStudent(const char *filename) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        printf("Error opening file.\n");
+        return 0;
+    }
+
+    int studentId;
+    printf("Enter student ID to delete: ");
+    scanf("%d", &studentId);
+
+    if (!studentExists(studentId, filename)) {
+        printf("Student with ID %d does not exist.\n", studentId);
+        fclose(file);
+        return 0;
+    }
+
+    FILE *tempFile = fopen("temp.txt", "w");
+    if (tempFile == NULL) {
+        printf("Error creating temporary file.\n");
+        fclose(file);
+        return 0;
+    }
+
+    char line[100];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        int currentId = 0;
+        sscanf(line, "%d,", &currentId);
+        if (currentId != studentId) {
+            fputs(line, tempFile);
+        }
+    }
+
+    fclose(file);
+    fclose(tempFile);
+
+    if (remove(filename) != 0) {
+        printf("Error deleting original file.\n");
+        return 0;
+    }
+
+    if (rename("temp.txt", filename) != 0) {
+        printf("Error renaming temporary file.\n");
+        return 0;
+    }
+
+    printf("\n\n----> Student with ID %d deleted successfully.\n\n", studentId);
+    return 1;
 }

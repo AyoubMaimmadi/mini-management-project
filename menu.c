@@ -5,9 +5,9 @@
 
 void Menu() {
     printf("============================= MENU =============================\n");
-    printf("=============== 1. Add a new student to the list ===============\n");
+    printf("=============== 1. Add a new student to the List ===============\n");
     printf("=============== 2. Modify Student Information ==================\n");
-    printf("=============== 3. Perform Action 3 ============================\n");
+    printf("=============== 3. Delete a Student ============================\n");
     printf("=============== 4. Log out =====================================\n"); 
     printf("================================================================\n");
 }
@@ -34,10 +34,10 @@ void functionalityChoice(const char *filename) {
                 modifyStudent(filename);
                 break;
             case 3:
-                printf("Action 3 selected.\n");
-                // Implement the code for action 3 here
+                printf("Delete Student Information by given ID.\n");
+                deleteStudent(filename);
                 break;
-            case 4:
+            case 8:
                 printf("Logged out successfully. Please run the program (main.c) to log back in.\n");
                 return; // Exit the function and return to the caller
             default:
