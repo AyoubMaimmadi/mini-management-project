@@ -149,8 +149,19 @@ void changeCredentials(User *user, const char *filename) {
         printf("Failed to open the file.\n");
         return;
     }
-  
+
+    char currentPassword[MAX_PASSWORD_LENGTH];
     char newPassword[MAX_PASSWORD_LENGTH];
+
+    printf("Enter your current password: ");
+    fgets(currentPassword, MAX_PASSWORD_LENGTH, stdin);
+    wordCleanUp(currentPassword);
+
+    if (wordCompare(user->password, currentPassword) != 0) {
+        printf("Invalid current password. Please try again.\n");
+        fclose(file);
+        return;
+    }
 
     printf("Enter your new password: ");
     fgets(newPassword, MAX_PASSWORD_LENGTH, stdin);
@@ -199,6 +210,7 @@ void changeCredentials(User *user, const char *filename) {
     remove(filename);
     rename("temp.txt", filename);
 
+    strncpy(user->password, newPassword, MAX_PASSWORD_LENGTH);
+
     printf("Credentials changed successfully.\n");
 }
-
