@@ -1,4 +1,6 @@
 #include "managementLogic.c"
+// #include "displayStudentsLogic.c"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h> 
@@ -62,7 +64,7 @@ void functionalityChoice(const char *filename) {
                     switch (choice) {
                         case 1:
                             printf("\nDisplaying all students in registration order.\n");
-                            // Call the corresponding function to display all students in registration order
+                            displayAllStudents(filename);
                             break;
                         case 2:
                             printf("\nDisplaying all students sorted by name.\n");

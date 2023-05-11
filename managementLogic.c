@@ -285,3 +285,31 @@ int deleteStudent(const char *filename) {
     printf("\n\n----> Student with ID %d deleted successfully.\n\n", studentId);
     return 1;
 }
+
+////////////////////////////////////// displayAllStudents //////////////////////////////////////
+void displayAllStudents(const char *filename) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        printf("Error opening file.\n");
+        return;
+    }
+
+    printf("---- All Students ----\n");
+    char line[100];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        int id;
+        char name[50];
+        char birthDate[11];
+        char school[4];
+        char major[50];
+        int credits;
+        float cgpa;
+        char entrySemester[15];
+
+        sscanf(line, "%d,%[^,],%[^,],%[^,],%[^,],%d,%f,%[^\n]", &id, name, birthDate, school, major, &credits, &cgpa, entrySemester);
+        printf("ID: %d\nName: %s\nBirth Date: %s\nSchool: %s\nMajor: %s\nCredits: %d\nCGPA: %.2f\nEntry Semester: %s\n\n",
+               id, name, birthDate, school, major, credits, cgpa, entrySemester);
+    }
+
+    fclose(file);
+}

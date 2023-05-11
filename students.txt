@@ -1,2 +1,10 @@
 1,Zineb Maimmadi,2004-02-02,SSE,CSC,99,3.44,Fall 2023
-2,Zineb Maimmadi,2020-12-12,SSE,CSC,4,3.00,Fall 2012
+2,Ayoub Maimmadi,2020-12-12,SSE,CSC,4,3.00,Fall 2012
+3,John Smith,2002-07-15,SSE,SEE,78,3.76,Fall 2022
+4,Sarah Johnson,2003-05-29,SSE,CSC,88,3.92,Spring 2023
+5,Michael Anderson,2001-11-10,SBE,BBA,92,3.60,Fall 2021
+6,Emily Davis,2004-09-03,SBE,MKT,85,3.80,Spring 2022
+7,David Thompson,2002-01-18,SSE,CE,93,3.95,Fall 2022
+8,Amy Wilson,2003-08-22,SSE,ME,81,3.25,Spring 2023
+9,Brian Roberts,2001-04-07,SBE,FIN,90,3.70,Fall 2021
+10,Megan Turner,2003-12-01,SBE,HRM,95,3.85,Spring 2022
