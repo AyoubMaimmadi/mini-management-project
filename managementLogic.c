@@ -528,3 +528,74 @@ void displayStudentByID(const char *filename, int id) {
 
     fclose(file);
 }
+
+//////////////////// displayStudentsWithinGPARange //////////////////////////////////////
+void displayStudentsWithinGPARange(const char *filename, float minGPA, float maxGPA) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        printf("Error opening file.\n");
+        return;
+    }
+
+    printf("Student ID | Name                | Birth Date | School | Major | Credits | CGPA | Entry Semester\n");
+    printf("---------------------------------------------------------------------------------------------\n");
+
+    char line[100];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        int id;
+        char name[50];
+        char birthDate[11];
+        char school[4];
+        char major[50];
+        int credits;
+        float cgpa;
+        char entrySemester[15];
+
+        sscanf(line, "%d,%[^,],%[^,],%[^,],%[^,],%d,%f,%[^\n]", &id, name, birthDate, school, major, &credits, &cgpa, entrySemester);
+
+        if (cgpa >= minGPA && cgpa <= maxGPA) {
+            printf("%-10d | %-20s | %-10s | %-6s | %-5s | %-7d | %.2f | %-15s\n",
+                   id, name, birthDate, school, major, credits, cgpa, entrySemester);
+        }
+    }
+
+    fclose(file);
+}
+
+//////////////////// displayStudentsWithinCreditsRange //////////////////////////////////////
+void displayStudentsWithinCreditsRange(const char *filename, int minCredits, int maxCredits) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        printf("Error opening file.\n");
+        return;
+    }
+
+    printf("---- Students within Credits Range (%d - %d) ----\n", minCredits, maxCredits);
+    printf("Student ID | Name                | Birth Date | School | Major | Credits | CGPA | Entry Semester\n");
+    printf("---------------------------------------------------------------------------------------------\n");
+
+    char line[100];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        int id;
+        char name[50];
+        char birthDate[11];
+        char school[4];
+        char major[50];
+        int credits;
+        float cgpa;
+        char entrySemester[15];
+
+        sscanf(line, "%d,%[^,],%[^,],%[^,],%[^,],%d,%f,%[^\n]",
+               &id, name, birthDate, school, major, &credits, &cgpa, entrySemester);
+
+        if (credits >= minCredits && credits <= maxCredits) {
+            printf("%-10d | %-20s | %-10s | %-6s | %-5s | %-7d | %.2f | %-15s\n",
+                   id, name, birthDate, school, major, credits, cgpa, entrySemester);
+        }
+    }
+
+    fclose(file);
+}
+
+
+

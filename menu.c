@@ -34,6 +34,9 @@ void functionalityChoice(const char *filename) {
     int choice;
     int sortChoice; 
     int studentID;
+    float minGPA, maxGPA;
+    int minCredits, maxCredits;
+
 
     while (1) {
         Menu();
@@ -91,12 +94,21 @@ void functionalityChoice(const char *filename) {
                             break;
                         case 5:
                             printf("\nDisplaying students within a GPA range.\n");
-                            // Call the corresponding function to display students within a GPA range
+                            printf("Please enter the minimum GPA: ");
+                            scanf("%f", &minGPA);
+                            printf("Please enter the maximum GPA: ");
+                            scanf("%f", &maxGPA);
+                            displayStudentsWithinGPARange(filename, minGPA, maxGPA);
                             break;
-                        case 6:
+                       case 6:
                             printf("\nDisplaying students within a credits range.\n");
-                            // Call the corresponding function to display students within a credits range
+                            printf("Please enter the minimum credits: ");
+                            scanf("%d", &minCredits);
+                            printf("Please enter the maximum credits: ");
+                            scanf("%d", &maxCredits);
+                            displayStudentsWithinCreditsRange(filename, minCredits, maxCredits);
                             break;
+
                         case 7:
                             printf("\nExiting student display filter.\n");
                             break;
