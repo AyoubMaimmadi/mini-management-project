@@ -313,3 +313,109 @@ void displayAllStudents(const char *filename) {
 
     fclose(file);
 }
+
+////////////////////////////////////// displayStudentsSortedByName //////////////////////////////////////
+void displayStudentsSortedByName(const char *filename) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        printf("Error opening file.\n");
+        return;
+    }
+
+    // Read the file and store student information in an array of structures
+    Student students[100]; // Assuming a maximum of 100 students
+    int count = 0;
+    char line[100];
+    while (fgets(line, sizeof(line), file) != NULL && count < 100) {
+        sscanf(line, "%d,%[^,],%[^,],%[^,],%[^,],%d,%f,%[^\n]",
+               &students[count].id,
+               students[count].name,
+               students[count].birthDate,
+               students[count].school,
+               students[count].major,
+               &students[count].credits,
+               &students[count].cgpa,
+               students[count].entrySemester);
+        count++;
+    }
+
+    fclose(file);
+
+    // Sort the array of structures by name (using bubble sort)
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - i - 1; j++) {
+            if (strcmp(students[j].name, students[j + 1].name) > 0) {
+                Student temp = students[j];
+                students[j] = students[j + 1];
+                students[j + 1] = temp;
+            }
+        }
+    }
+
+    // Display the sorted student information
+    printf("---- Students Sorted by Name ----\n");
+    for (int i = 0; i < count; i++) {
+        printf("ID: %d\nName: %s\nBirth Date: %s\nSchool: %s\nMajor: %s\nCredits: %d\nCGPA: %.2f\nEntry Semester: %s\n\n",
+               students[i].id,
+               students[i].name,
+               students[i].birthDate,
+               students[i].school,
+               students[i].major,
+               students[i].credits,
+               students[i].cgpa,
+               students[i].entrySemester);
+    }
+}
+
+//////////////////// displayStudentsSortedByRegistrationOrder //////////////////////////////////////
+void displayStudentsSortedByRegistrationOrder(const char *filename) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        printf("Error opening file.\n");
+        return;
+    }
+
+    // Read the file and store student information in an array of structures
+    Student students[100]; // Assuming a maximum of 100 students
+    int count = 0;
+    char line[100];
+    while (fgets(line, sizeof(line), file) != NULL && count < 100) {
+        sscanf(line, "%d,%[^,],%[^,],%[^,],%[^,],%d,%f,%[^\n]",
+               &students[count].id,
+               students[count].name,
+               students[count].birthDate,
+               students[count].school,
+               students[count].major,
+               &students[count].credits,
+               &students[count].cgpa,
+               students[count].entrySemester);
+        count++;
+    }
+
+    fclose(file);
+
+    // Sort the array of structures by entry semester (using bubble sort)
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - i - 1; j++) {
+            if (strcmp(students[j].entrySemester, students[j + 1].entrySemester) > 0) {
+                Student temp = students[j];
+                students[j] = students[j + 1];
+                students[j + 1] = temp;
+            }
+        }
+    }
+
+    // Display the sorted student information
+    printf("---- Students Sorted by Entry Semester ----\n");
+    for (int i = 0; i < count; i++) {
+        printf("ID: %d\nName: %s\nBirth Date: %s\nSchool: %s\nMajor: %s\nCredits: %d\nCGPA: %.2f\nEntry Semester: %s\n\n",
+               students[i].id,
+               students[i].name,
+               students[i].birthDate,
+               students[i].school,
+               students[i].major,
+               students[i].credits,
+               students[i].cgpa,
+               students[i].entrySemester);
+    }
+}

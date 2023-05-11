@@ -19,6 +19,7 @@ void Menu() {
 
 void displayOptions() {
     printf("\n=================== Display Options ==========================\n");
+    printf("=== 0. Display all students \n");
     printf("=== 1. Display all students in registration order \n");
     printf("=== 2. Display all students sorted by name \n");
     printf("=== 3. Display all students sorted by ID \n");
@@ -62,13 +63,17 @@ void functionalityChoice(const char *filename) {
                     scanf("%d", &choice);
                     getchar(); // Clear the newline character from the input buffer
                     switch (choice) {
+                        case 0: 
+                            printf("\nDisplaying all students.\n");
+                            displayAllStudents(filename);
+                            break;
                         case 1:
                             printf("\nDisplaying all students in registration order.\n");
-                            displayAllStudents(filename);
+                            displayStudentsSortedByRegistrationOrder(filename);
                             break;
                         case 2:
                             printf("\nDisplaying all students sorted by name.\n");
-                            // Call the corresponding function to display all students sorted by name
+                            displayStudentsSortedByName(filename);
                             break;
                         case 3:
                             printf("\nDisplaying all students sorted by ID.\n");
