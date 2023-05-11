@@ -97,10 +97,10 @@ void functionalityChoice(const char *filename) {
                 }
                 break;
             case 5:
-                printf("\nLogged out successfully. Please run the program (main.c) to log back in.\n");
+                printf("\nLogged out successfully. Please run the program (main.c) to log back in.\nd\n");
                 return; // Exit the function and return to the caller
             default:
-                printf("\nSorry, this choice is not recognized! Try another one: \n");
+                printf("\nSorry, this choice is not recognized! \n\n");
                 break;
         }
     }

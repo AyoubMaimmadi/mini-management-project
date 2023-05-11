@@ -241,7 +241,6 @@ int modifyStudent(const char *filename) {
 }
 
 ////////////////////////////////////// Delete Student //////////////////////////////////////
-
 int deleteStudent(const char *filename) {
     FILE *file = fopen(filename, "r");
     if (file == NULL) {

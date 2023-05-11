@@ -86,7 +86,7 @@ int checkCredentials(User *user, const char *filename) {
 int attemptLogin(int maxAttempts, User *user, const char *filename) {
     int attempts = 0;
 
-    printf("Welcome to the login page for student management platfrom (SMP).\n\n");
+    printf("\nWelcome to the login page for student management platfrom (SMP). All modifications directly impact the students file just like a real database (without the need for a save file option). Permission was aquirred from the professor to impliment it this way.\n\n");
 
     while (attempts < maxAttempts) {
         printf("Enter your username: ");
