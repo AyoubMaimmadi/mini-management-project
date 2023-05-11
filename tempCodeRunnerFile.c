@@ -1,1 +1,0 @@
-functionalityChoice(STUDENTS, USERS, &user);

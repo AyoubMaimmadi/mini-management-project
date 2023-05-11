@@ -31,7 +31,7 @@ void displayOptions() {
     printf("================================================================\n\n");
 }
 
-void functionalityChoice(const char *studentFile) {
+void functionalityChoice(const char *studentFile, User *user, const char *usersFile) {
     int choice;
     int sortChoice; 
     int studentID;
@@ -124,7 +124,7 @@ void functionalityChoice(const char *studentFile) {
                 break;
             case 5:
                 printf("\nChange Credentials.\n\n");
-                // changeCredentials(); 
+                changeCredentials(user, usersFile); 
                 break;
             case 6:
                 printf("\nLogged out successfully. Please run the program (main.c) to log back in.\n\n");

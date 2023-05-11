@@ -18,7 +18,7 @@ int main() {
 
     if (success) {
         printf("\nWelcome, %s!, this is a platform where you can add, modify, display, filter, and delete students from a small text file database.\n\n", user.name);
-        functionalityChoice(STUDENTS);
+        functionalityChoice(STUDENTS, &user, USERS);
     } else {
         printf("Max attempts reached. Access denied.\n\n");
     }

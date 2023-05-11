@@ -109,5 +109,41 @@ int attemptLogin(int maxAttempts, User *user, const char *filename) {
     return 0;
 }
 
+int validatePassword(const char *password) {
+    int length = wordLength(password);
+
+    // Check password length
+    if (length < 6 || length > 12) {
+        printf("Invalid password length. Password must contain 6-12 characters.\n");
+        return 0;
+    }
+
+    int hasLower = 0;
+    int hasUpper = 0;
+    int hasDigit = 0;
+    int hasSpecial = 0;
+
+    // Check password for required character types
+    for (int i = 0; i < length; i++) {
+        if (islower(password[i]))
+            hasLower = 1;
+        else if (isupper(password[i]))
+            hasUpper = 1;
+        else if (isdigit(password[i]))
+            hasDigit = 1;
+        else if (ispunct(password[i]))
+            hasSpecial = 1;
+    }
+
+    if (!(hasLower && hasUpper && hasDigit && hasSpecial)) {
+        printf("Invalid password format. Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character.\n");
+        return 0;
+    }
+
+    return 1;
+}
 
 
+void changeCredentials(User *user, const char *filename) {
+    
+}
