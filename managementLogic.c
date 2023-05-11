@@ -294,7 +294,9 @@ void displayAllStudents(const char *filename) {
         return;
     }
 
-    printf("---- All Students ----\n");
+    printf("Student ID | Name                | Birth Date | School | Major | Credits | CGPA | Entry Semester\n");
+    printf("---------------------------------------------------------------------------------------------\n");
+
     char line[100];
     while (fgets(line, sizeof(line), file) != NULL) {
         int id;
@@ -307,7 +309,8 @@ void displayAllStudents(const char *filename) {
         char entrySemester[15];
 
         sscanf(line, "%d,%[^,],%[^,],%[^,],%[^,],%d,%f,%[^\n]", &id, name, birthDate, school, major, &credits, &cgpa, entrySemester);
-        printf("ID: %d\nName: %s\nBirth Date: %s\nSchool: %s\nMajor: %s\nCredits: %d\nCGPA: %.2f\nEntry Semester: %s\n\n",
+
+        printf("%-10d | %-20s | %-10s | %-6s | %-5s | %-7d | %.2f | %-15s\n",
                id, name, birthDate, school, major, credits, cgpa, entrySemester);
     }
 
@@ -352,10 +355,11 @@ void displayStudentsSortedByName(const char *filename) {
         }
     }
 
-    // Display the sorted student information
     printf("---- Students Sorted by Name ----\n");
+     printf("Student ID | Name                | Birth Date | School | Major | Credits | CGPA | Entry Semester\n");
+    printf("---------------------------------------------------------------------------------------------\n");
     for (int i = 0; i < count; i++) {
-        printf("ID: %d\nName: %s\nBirth Date: %s\nSchool: %s\nMajor: %s\nCredits: %d\nCGPA: %.2f\nEntry Semester: %s\n\n",
+        printf("%-10d | %-20s | %-10s | %-6s | %-5s | %-7d | %.2f | %-15s\n",
                students[i].id,
                students[i].name,
                students[i].birthDate,
@@ -406,9 +410,65 @@ void displayStudentsSortedByRegistrationOrder(const char *filename) {
     }
 
     // Display the sorted student information
-    printf("---- Students Sorted by Entry Semester ----\n");
+    printf("---- Students Sorted by Registration Order ----\n");
+     printf("Student ID | Name                | Birth Date | School | Major | Credits | CGPA | Entry Semester\n");
+    printf("---------------------------------------------------------------------------------------------\n");
     for (int i = 0; i < count; i++) {
-        printf("ID: %d\nName: %s\nBirth Date: %s\nSchool: %s\nMajor: %s\nCredits: %d\nCGPA: %.2f\nEntry Semester: %s\n\n",
+        printf("%-10d | %-20s | %-10s | %-6s | %-5s | %-7d | %.2f | %-15s\n",
+               students[i].id,
+               students[i].name,
+               students[i].birthDate,
+               students[i].school,
+               students[i].major,
+               students[i].credits,
+               students[i].cgpa,
+               students[i].entrySemester);
+    }
+}
+
+
+void displayStudentsSortedByID(const char *filename, int sortOrder) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        printf("Error opening file.\n");
+        return;
+    }
+
+    // Read the file and store student information in an array of structures
+    Student students[100]; // Assuming a maximum of 100 students
+    int count = 0;
+    char line[100];
+    while (fgets(line, sizeof(line), file) != NULL && count < 100) {
+        sscanf(line, "%d,%[^,],%[^,],%[^,],%[^,],%d,%f,%[^\n]",
+               &students[count].id,
+               students[count].name,
+               students[count].birthDate,
+               students[count].school,
+               students[count].major,
+               &students[count].credits,
+               &students[count].cgpa,
+               students[count].entrySemester);
+        count++;
+    }
+
+    fclose(file);
+
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - i - 1; j++) {
+            if ((sortOrder == 1 && students[j].id > students[j + 1].id) ||
+                (sortOrder == 0 && students[j].id < students[j + 1].id)) {
+                // Swap the students
+                Student temp = students[j];
+                students[j] = students[j + 1];
+                students[j + 1] = temp;
+            }
+        }
+    }
+
+    printf("Student ID | Name                | Birth Date | School | Major | Credits | CGPA | Entry Semester\n");
+    printf("---------------------------------------------------------------------------------------------\n");
+    for (int i = 0; i < count; i++) {
+        printf("%-10d | %-20s | %-10s | %-6s | %-5s | %-7d | %.2f | %-15s\n",
                students[i].id,
                students[i].name,
                students[i].birthDate,

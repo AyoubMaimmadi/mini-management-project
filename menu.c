@@ -32,6 +32,8 @@ void displayOptions() {
 
 void functionalityChoice(const char *filename) {
     int choice;
+    int sortChoice; // Move the declaration here
+
     while (1) {
         Menu();
         printf("\nPlease choose an action to perform (you must type number): ");
@@ -76,8 +78,9 @@ void functionalityChoice(const char *filename) {
                             displayStudentsSortedByName(filename);
                             break;
                         case 3:
-                            printf("\nDisplaying all students sorted by ID.\n");
-                            // Call the corresponding function to display all students sorted by ID
+                            printf("\nPlease choose a sort order (1: asc, 2: desc): ");
+                            scanf("%d", &sortChoice);
+                            displayStudentsSortedByID(filename, sortChoice);
                             break;
                         case 4:
                             printf("Displaying a single student by ID.\n");
