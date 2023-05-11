@@ -47,7 +47,7 @@ int addStudent(const char *filename) {
     }
 
     Student student;
-    printf("Enter student ID: ");
+    printf("Enter student ID (must be a unique number): ");
     scanf("%d", &student.id);
 
     if (studentExist(student.id, filename)) {
@@ -56,7 +56,7 @@ int addStudent(const char *filename) {
         return 0;
     }
 
-    printf("Enter your full name: ");
+    printf("Enter your full name (e.g., John Doe): ");
     scanf(" %[^\n]", student.name);
 
     printf("Enter student birth date (yyyy-mm-dd): ");
@@ -80,7 +80,7 @@ int addStudent(const char *filename) {
     fprintf(file, "%d,%s,%s,%s,%s,%d,%.2f,%s\n", student.id, student.name, student.birthDate, student.school, student.major, student.credits, student.cgpa, student.entrySemester);
 
     fclose(file);
-    printf("Student added successfully.\n");
+    printf("----> Student added successfully.\n\n");
     return 1; // Return success status
 }
 
@@ -148,6 +148,6 @@ int modifyStudent(const char *filename) {
     fprintf(file, "%d,%s,%s,%s,%s,%d,%.2f,%s\n", studentId, student.name, student.birthDate, student.school, student.major, student.credits, student.cgpa, student.entrySemester);
 
     fclose(file);
-    printf("Student with ID %d modified successfully.\n", studentId);
+    printf("----> Student with ID %d modified successfully.\n\n", studentId);
     return 1; 
 }
