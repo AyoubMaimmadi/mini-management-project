@@ -1,3 +1,4 @@
+// this code may seem long but it is very repetitive
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h> 
@@ -18,30 +19,36 @@ typedef struct {
 int isValidDateFormat(const char *date) {
     // Validate the birth date format (yyyy-mm-dd)
     int year, month, day;
+    // if the date is not in the format of yyyy-mm-dd then return 0
     if (sscanf(date, "%d-%d-%d", &year, &month, &day) != 3) {
         return 0;
     }
+    // otherwise return 1
     return 1;
 }
 
 // function that checks if the birth year is valid
 int isValidBirthYear(int year) {
     // Check if the birth year falls within a specific range
+    // starting from the year of AUI opening (1995) to the year 2010 to include young students
     return (year >= 1995 && year <= 2010);
 }
 
 // function that checks if the credits is within the range (0-140)
 int isValidCredit(int credits) {
+    // this returns 1 if the credits is within the range (0-140) and 0 otherwise
     return (credits >= 0 && credits <= 140);
 }
 
 // function that checks if the cgpa is within the range (0-4)
 int isValidCGPA(float cgpa) {
+    // this returns 1 if the cgpa is within the range (0-4) and 0 otherwise
     return (cgpa >= 0 && cgpa <= 4);
 }
 
 // function that checks if the student exists in the file
 int studentExists(int id, const char *filename) {
+    // this function returns 1 if the student exists in the file and 0 otherwise
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         printf("Error opening file.\n");
