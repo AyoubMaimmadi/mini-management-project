@@ -519,16 +519,17 @@ void displayStudentsSortedByRegistrationOrder(const char *filename) {
     }
 }
 
-////////////////////////////////////// displayStudentsSortedByID //////////////////////////////////////
+////////////////////////////////////// display Students Sorted By ID //////////////////////////////////////
 void displayStudentsSortedByID(const char *filename, int sortOrder) {
+    // open the file in read mode
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         printf("Error opening file.\n");
         return;
     }
 
-    // Read the file and store student information in an array of structures
-    Student students[100]; // Assuming a maximum of 100 students
+    // same as the previous function
+    Student students[100]; 
     int count = 0;
     char line[100];
     while (fgets(line, sizeof(line), file) != NULL && count < 100) {
@@ -546,8 +547,11 @@ void displayStudentsSortedByID(const char *filename, int sortOrder) {
 
     fclose(file);
 
+    // same as the previous functions, except that we sort by sort order (ascending 1, or descending, 2)
     for (int i = 0; i < count - 1; i++) {
         for (int j = 0; j < count - i - 1; j++) {
+            // if the sort order is ascending and the id of the current student is greater than the id of the next student
+            // or if the sort order is descending and the id of the current student is less than the id of the next student
             if ((sortOrder == 1 && students[j].id > students[j + 1].id) ||
                 (sortOrder == 2 && students[j].id < students[j + 1].id)) {
                 // Swap the students
@@ -558,8 +562,11 @@ void displayStudentsSortedByID(const char *filename, int sortOrder) {
         }
     }
 
+    // print the header of the table of students to be displayed
     printf("Student ID | Name                | Birth Date | School | Major | Credits | CGPA | Entry Semester\n");
     printf("---------------------------------------------------------------------------------------------\n");
+
+    // loop and print the students information in a formatted way seperated by |
     for (int i = 0; i < count; i++) {
         printf("%-10d | %-20s | %-10s | %-6s | %-5s | %-7d | %.2f | %-15s\n",
                students[i].id,
@@ -573,25 +580,30 @@ void displayStudentsSortedByID(const char *filename, int sortOrder) {
     }
 }
 
-//////////////////// displayStudentByID //////////////////////////////////////
+//////////////////// display Student By ID //////////////////////////////////////
 void displayStudentByID(const char *filename, int id) {
+    // open file
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         printf("Error opening file.\n");
         return;
     }
 
+    // loop through the file until we find the student with the given id
     int found = 0;
     char line[100];
     while (fgets(line, sizeof(line), file) != NULL) {
         int currentId = 0;
         sscanf(line, "%d,", &currentId);
+        // if the id of the current student is equal to the given id then we found the student
         if (currentId == id) {
+            // change the value of found to 1 to break the loop
             found = 1;
             break;
         }
     }
 
+    // if we found the student then we print the student information according to this format under
     if (found) {
         int studentId;
         char name[50];
@@ -615,23 +627,28 @@ void displayStudentByID(const char *filename, int id) {
         printf("CGPA: %.2f\n", cgpa);
         printf("Entry Semester: %s\n", entrySemester);
     } else {
+        // otherwise we print that the student does not exist
         printf("Student with ID %d does not exist.\n", id);
     }
 
+    // at last we close the file
     fclose(file);
 }
 
-//////////////////// displayStudentsWithinGPARange //////////////////////////////////////
+//////////////////// display Students Within a GPA Range //////////////////////////////////////
 void displayStudentsWithinGPARange(const char *filename, float minGPA, float maxGPA) {
+    // open the file
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         printf("Error opening file.\n");
         return;
     }
 
+    // print the header of the table of students to be displayed
     printf("Student ID | Name                | Birth Date | School | Major | Credits | CGPA | Entry Semester\n");
     printf("---------------------------------------------------------------------------------------------\n");
 
+    // loop through the file and store each student in the variables below
     char line[100];
     while (fgets(line, sizeof(line), file) != NULL) {
         int id;
@@ -644,7 +661,8 @@ void displayStudentsWithinGPARange(const char *filename, float minGPA, float max
         char entrySemester[15];
 
         sscanf(line, "%d,%[^,],%[^,],%[^,],%[^,],%d,%f,%[^\n]", &id, name, birthDate, school, major, &credits, &cgpa, entrySemester);
-
+        
+        // print stident only if the cgpa of the current student is within the given range then we print the student
         if (cgpa >= minGPA && cgpa <= maxGPA) {
             printf("%-10d | %-20s | %-10s | %-6s | %-5s | %-7d | %.2f | %-15s\n",
                    id, name, birthDate, school, major, credits, cgpa, entrySemester);
@@ -654,18 +672,21 @@ void displayStudentsWithinGPARange(const char *filename, float minGPA, float max
     fclose(file);
 }
 
-//////////////////// displayStudentsWithinCreditsRange //////////////////////////////////////
+//////////////////// display Students Within Credits Range //////////////////////////////////////
 void displayStudentsWithinCreditsRange(const char *filename, int minCredits, int maxCredits) {
+    // open the file
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         printf("Error opening file.\n");
         return;
     }
 
+    // print the header of the table of students to be displayed
     printf("---- Students within Credits Range (%d - %d) ----\n", minCredits, maxCredits);
     printf("Student ID | Name                | Birth Date | School | Major | Credits | CGPA | Entry Semester\n");
     printf("---------------------------------------------------------------------------------------------\n");
 
+    // same as the previous function
     char line[100];
     while (fgets(line, sizeof(line), file) != NULL) {
         int id;
@@ -680,6 +701,7 @@ void displayStudentsWithinCreditsRange(const char *filename, int minCredits, int
         sscanf(line, "%d,%[^,],%[^,],%[^,],%[^,],%d,%f,%[^\n]",
                &id, name, birthDate, school, major, &credits, &cgpa, entrySemester);
 
+        // this time we check if the credits of the current student is within the given range then print the student
         if (credits >= minCredits && credits <= maxCredits) {
             printf("%-10d | %-20s | %-10s | %-6s | %-5s | %-7d | %.2f | %-15s\n",
                    id, name, birthDate, school, major, credits, cgpa, entrySemester);

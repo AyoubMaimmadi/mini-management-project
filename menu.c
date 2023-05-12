@@ -95,7 +95,7 @@ void functionalityChoice(const char *studentFile, User *user, const char *usersF
                             displayStudentsSortedByName(studentFile);
                             break;
                         case 3:
-                            printf("\nPlease choose a sort order (1: asc, 2: desc): ");
+                            printf("\nPlease choose a sort order (1: ascending, 2: descending): ");
                             scanf("%d", &sortChoice);
                             displayStudentsSortedByID(studentFile, sortChoice);
                             break;
