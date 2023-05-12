@@ -341,19 +341,24 @@ int deleteStudent(const char *filename) {
     return 1;
 }
 
-////////////////////////////////////// displayAllStudents //////////////////////////////////////
+////////////////////////////////////// display All Students //////////////////////////////////////
 void displayAllStudents(const char *filename) {
+    // Open the file in read mode
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         printf("Error opening file.\n");
         return;
     }
 
+    // print the header of the table of students to be displayed
     printf("Student ID | Name                | Birth Date | School | Major | Credits | CGPA | Entry Semester\n");
     printf("---------------------------------------------------------------------------------------------\n");
 
+    // initialize the line array to 100 in size
     char line[100];
+    // loop through the file line by line
     while (fgets(line, sizeof(line), file) != NULL) {
+        // initialize the variables that we will use to store the student information for each line every time we loop
         int id;
         char name[50];
         char birthDate[11];
@@ -363,12 +368,15 @@ void displayAllStudents(const char *filename) {
         float cgpa;
         char entrySemester[15];
 
+        // scan the line and store the student information in the variables
         sscanf(line, "%d,%[^,],%[^,],%[^,],%[^,],%d,%f,%[^\n]", &id, name, birthDate, school, major, &credits, &cgpa, entrySemester);
 
+        // and then print the student information in a formatted way seperated by | 
         printf("%-10d | %-20s | %-10s | %-6s | %-5s | %-7d | %.2f | %-15s\n",
                id, name, birthDate, school, major, credits, cgpa, entrySemester);
     }
 
+    // close the file
     fclose(file);
 }
 
