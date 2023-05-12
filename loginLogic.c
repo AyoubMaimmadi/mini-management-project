@@ -129,7 +129,7 @@ int attemptLogin(int maxAttempts, User *user, const char *filename) {
             // if the credentials are not valid, we increment the attempts and print the attempts remaining
         } else {
             attempts++;
-            printf("Invalid credentials. Attempts remaining: %d\n",
+            printf("Invalid credentials. Attempts remaining: %d\n\n",
                    maxAttempts - attempts);
         }
     }
@@ -204,7 +204,7 @@ void changeCredentials(User *user, const char *filename) {
 
     // we check if the current password is the same as the password of the user
     if (wordCompare(user->password, currentPassword) != 0) {
-        printf("Invalid current password. Please try again.\n");
+        printf("Invalid current password. Please try again.\n\n");
         fclose(file);
         return;
     }
