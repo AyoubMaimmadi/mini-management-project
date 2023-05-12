@@ -380,19 +380,24 @@ void displayAllStudents(const char *filename) {
     fclose(file);
 }
 
-////////////////////////////////////// displayStudentsSortedByName //////////////////////////////////////
+////////////////////////////////////// display Students Sorted By Name //////////////////////////////////////
 void displayStudentsSortedByName(const char *filename) {
+    // Open the file in read mode
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         printf("Error opening file.\n");
         return;
     }
 
-    // Read the file and store student information in an array of structures
-    Student students[100]; // Assuming a maximum of 100 students
+    // initialize an array of structures of type Student where we will store the students information for eachone
+    Student students[100]; 
+    // initialize a counter to count the number of students in the file to loop through them later for sorting and printing
     int count = 0;
+    // initialize the line array to 100 in size
     char line[100];
+    // we loop through the file line by line and store the student information in the array of structures
     while (fgets(line, sizeof(line), file) != NULL && count < 100) {
+        // we use sscanf to scan the line and store the student information in the array of structures
         sscanf(line, "%d,%[^,],%[^,],%[^,],%[^,],%d,%f,%[^\n]",
                &students[count].id,
                students[count].name,
@@ -402,25 +407,36 @@ void displayStudentsSortedByName(const char *filename) {
                &students[count].credits,
                &students[count].cgpa,
                students[count].entrySemester);
+        // we increment the counter by 1 every time we loop
         count++;
     }
 
+    // close the file
     fclose(file);
 
-    // Sort the array of structures by name (using bubble sort)
+    // sorting the array of students by name (using bubble sort)
     for (int i = 0; i < count - 1; i++) {
+        // we iterate over the unsorted part of the array
         for (int j = 0; j < count - i - 1; j++) {
+            // we compare the names of adjacent students
+            // if the name of the current student is greater than the name of the next student then we swap them
             if (strcmp(students[j].name, students[j + 1].name) > 0) {
+                // we use a temporary variable of type Student to store the current student
                 Student temp = students[j];
+                // and the we swap by assigning the current student to the next student
                 students[j] = students[j + 1];
+                // and then we assign the next student to the temporary variable
                 students[j + 1] = temp;
             }
         }
     }
 
+    // print the header of the table of students to be displayed
     printf("---- Students Sorted by Name ----\n");
      printf("Student ID | Name                | Birth Date | School | Major | Credits | CGPA | Entry Semester\n");
     printf("---------------------------------------------------------------------------------------------\n");
+
+    // loop through the sorted array of students and print the student information in a formatted way seperated by |
     for (int i = 0; i < count; i++) {
         printf("%-10d | %-20s | %-10s | %-6s | %-5s | %-7d | %.2f | %-15s\n",
                students[i].id,
@@ -434,17 +450,21 @@ void displayStudentsSortedByName(const char *filename) {
     }
 }
 
-//////////////////// displayStudentsSortedByRegistrationOrder //////////////////////////////////////
+//////////////////// display Students Sorted By Registration Order //////////////////////////////////////
+// we are assuming that registration order means the entry semester of the student 
 void displayStudentsSortedByRegistrationOrder(const char *filename) {
+    // Open the file in read mode
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         printf("Error opening file.\n");
         return;
     }
 
-    // Read the file and store student information in an array of structures
-    Student students[100]; // Assuming a maximum of 100 students
+    // initialize an array of structures of type Student where we will store the students information for eachone
+    Student students[100]; 
+    // initialize a counter to count the number of students in the file to loop through them later for sorting and printing
     int count = 0;
+    // same as the previous function wew loop and store the student information in the array of structures
     char line[100];
     while (fgets(line, sizeof(line), file) != NULL && count < 100) {
         sscanf(line, "%d,%[^,],%[^,],%[^,],%[^,],%d,%f,%[^\n]",
@@ -456,26 +476,36 @@ void displayStudentsSortedByRegistrationOrder(const char *filename) {
                &students[count].credits,
                &students[count].cgpa,
                students[count].entrySemester);
+        // and increment the counter by 1 every time we loop
         count++;
     }
 
     fclose(file);
 
-    // Sort the array of structures by entry semester (using bubble sort)
+    // Also the same as the previous funcion
+    // we sort the array of students by entry semester (using bubble sort)
     for (int i = 0; i < count - 1; i++) {
+        // we iterate over the unsorted part of the array
         for (int j = 0; j < count - i - 1; j++) {
+            // we compare the names of adjacent students
+            // if the name of the current student is greater than the name of the next student then we swap them
             if (strcmp(students[j].entrySemester, students[j + 1].entrySemester) > 0) {
+                // we use a temporary variable of type Student to store the current student
                 Student temp = students[j];
+                // and the we swap by assigning the current student to the next student
                 students[j] = students[j + 1];
+                // and then we assign the next student to the temporary variable
                 students[j + 1] = temp;
             }
         }
     }
 
-    // Display the sorted student information
+    // we print the header of the table of students to be displayed
     printf("---- Students Sorted by Registration Order ----\n");
      printf("Student ID | Name                | Birth Date | School | Major | Credits | CGPA | Entry Semester\n");
     printf("---------------------------------------------------------------------------------------------\n");
+
+    // we loop through the sorted array of students and print the student information in a formatted way seperated by |
     for (int i = 0; i < count; i++) {
         printf("%-10d | %-20s | %-10s | %-6s | %-5s | %-7d | %.2f | %-15s\n",
                students[i].id,
